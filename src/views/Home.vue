@@ -23,7 +23,7 @@
 
       <v-btn
         color="primary"
-        to="#"
+        to="rx-prescription"
         text
       >
         <v-icon>mdi-prescription</v-icon>

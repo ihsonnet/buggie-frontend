@@ -16,12 +16,28 @@ const router = new VueRouter({
       redirect: { name: 'Prescription' },
       children: [
         {
-          path: 'rx',
+          path: 'rx-prescription',
           name: 'Prescription',
           // route level code-splitting
           // this generates a separate chunk (about.[hash].js) for this route
           // which is lazy-loaded when the route is visited.
           component: Prescription
+        },
+        {
+          path: 'create-appointment',
+          name: 'Create Appointment',
+          // route level code-splitting
+          // this generates a separate chunk (about.[hash].js) for this route
+          // which is lazy-loaded when the route is visited.
+          component: () => import(/* webpackChunkName: "about" */ '../views/CreateAppointment.vue')
+        },
+        {
+          path: 'appointment-list',
+          name: 'Appointment List',
+          // route level code-splitting
+          // this generates a separate chunk (about.[hash].js) for this route
+          // which is lazy-loaded when the route is visited.
+          component: () => import(/* webpackChunkName: "about" */ '../views/AppointmentList.vue')
         }
       ]
     },

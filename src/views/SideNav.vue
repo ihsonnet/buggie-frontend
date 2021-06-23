@@ -25,19 +25,19 @@
           nav
           dense
         >
-          <v-list-item link>
+          <v-list-item link to="/rx-prescription">
             <v-list-item-icon>
               <v-icon>mdi-prescription</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Create Presciption</v-list-item-title>
           </v-list-item>
-          <v-list-item link>
+          <v-list-item link to="/create-appointment">
             <v-list-item-icon>
               <v-icon>mdi-clipboard-plus</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Create Appointment</v-list-item-title>
           </v-list-item>
-          <v-list-item link>
+          <v-list-item link to="appointment-list">
             <v-list-item-icon>
               <v-icon>mdi-clipboard-text</v-icon>
             </v-list-item-icon>

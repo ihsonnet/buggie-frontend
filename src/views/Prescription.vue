@@ -1,6 +1,14 @@
 <template>
-    <v-row>
-        <v-col cols="3">
+    <div>
+        <v-card rounded="0" elevation="0" color="#f2f5f8"> 
+            <v-breadcrumbs :items="items">
+            <template v-slot:divider>
+                <v-icon>mdi-chevron-right</v-icon>
+            </template>
+            </v-breadcrumbs>
+        </v-card>
+        <v-row>
+        <v-col cols="12" lg="3" md="3" sm="12" xs="12">
             <v-card  class="ma-5" elevation="0">
                 <v-row>
                     <v-col>
@@ -42,16 +50,29 @@
         class="mx-0"
         vertical
         ></v-divider>
-        <v-col cols="9">
+        <v-col cols="12"  lg="9" md="9" sm="12" xs="12">
 
         </v-col>
     </v-row>
+    </div>
 </template>
 <script>
 export default {
     data() {
         return {
-            input: "new"
+            input: "new",
+            items: [
+        {
+          text: 'a2sDMS',
+          disabled: false,
+          href: 'https://a2sdms.com',
+        },
+        {
+          text: 'Create Prescription',
+          disabled: true,
+          href: 'rx-prescription',
+        },
+      ],
         }
     },
     methods: {
