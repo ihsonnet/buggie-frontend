@@ -197,7 +197,7 @@
 
 
 
-    // dialog here
+    <!-- dialog here -->
 
     <v-dialog title="Add New Drug" v-model="adddialog" max-width="800px">
         <v-card class="pa-5">
