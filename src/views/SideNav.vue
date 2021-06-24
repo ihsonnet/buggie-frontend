@@ -46,3 +46,11 @@
         </v-list>
     </v-navigation-drawer>
 </template>
+<style lang="scss" scoped>
+.v-list-item__title {
+  font-size: 15px !important;
+}
+.v-breadcrumbs__item a{
+  font-weight: bolder !important;
+}
+</style>
