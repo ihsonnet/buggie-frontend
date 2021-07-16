@@ -43,6 +43,12 @@
             </v-list-item-icon>
             <v-list-item-title>Appointment List</v-list-item-title>
           </v-list-item>
+          <v-list-item link to="generic-controller">
+            <v-list-item-icon>
+              <v-icon>mdi-pill</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Generic Contoller</v-list-item-title>
+          </v-list-item>
         </v-list>
     </v-navigation-drawer>
 </template>

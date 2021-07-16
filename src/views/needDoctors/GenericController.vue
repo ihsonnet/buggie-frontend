@@ -10,7 +10,6 @@
     </v-alert>
   </div>
   <br>
-  <br>
     <v-card
     elevation="0"
     style="border:1px solid #e7e7e7">
@@ -289,7 +288,8 @@ export default {
           this.getGenericInfo()
         }
         else this.tab = null
-
+        this.successMsg = false
+        this.errorMsg = false
         console.log(val)
       },
       search (val) {
