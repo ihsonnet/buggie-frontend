@@ -1,12 +1,12 @@
 <template>
   <v-container>
     <div style="position: fixed;z-index:1;right:20px">
-    <v-alert v-if="successMsg" type="success">
-     {{genericInfo.genericName}} Edit Successful!
+    <v-alert v-if="successMsg" text type="success">
+     <b>#ID {{model}}</b> Info Edited Successfully!
     </v-alert>
 
-    <v-alert v-if="errorMsg" type="error">
-      Something Went Wrong!
+    <v-alert v-if="errorMsg" text type="error">
+      <b>#ERROR </b>Something Went Wrong!
     </v-alert>
   </div>
   <br>
@@ -178,10 +178,19 @@
             </v-textarea>
             <v-btn
               color="success"
-              class="mr-4"
+              style="color:white"
+              class="mr-4 pa-2"
               @click="editGenericInfo"
             >
-              Validate
+             <v-progress-circular
+                indeterminate
+                :size="25"
+                :width="2"
+                class="mr-2"
+                v-if="isLoading2"
+                color="white"
+              ></v-progress-circular>
+               Update Info
             </v-btn>
           </v-form>
         </v-col>
@@ -252,10 +261,10 @@ export default {
       })
       .catch(err => {
             console.log(err)
-          })
-      .finally(() => (this.isLoading2 = false))
+      })
       },
       editGenericInfo(){
+        this.isLoading2 = true
         axios({
           method: "PUT",
           url: `${this.GET_GENERIC_API}/${this.model}`,
@@ -279,6 +288,7 @@ export default {
             this.successMsg = false
             this.errorMsg = true
         })
+        .finally(() => (this.isLoading2 = false))
       }
     },
     watch: {
