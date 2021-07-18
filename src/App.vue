@@ -6,6 +6,12 @@ export default {
   data: () => ({
     //
   })
+  ,
+  mounted() {
+    if (location.protocol !== "http:") {
+  location.protocol = "http:";
+}
+  }
 }
 </script>
 <style lang="scss" scoped>
