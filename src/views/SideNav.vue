@@ -8,13 +8,13 @@
         <v-list>
           <v-list-item class="px-2" link>
             <v-list-item-avatar>
-              <v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
+              <v-img src="https://avatars.githubusercontent.com/u/48057930?v=4"></v-img>
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title class="text-h6">
-                Dr. Sandra Adams
+               Injamamul Haque Sonet
               </v-list-item-title>
-              <v-list-item-subtitle>MBBS, Dhaka Medical College</v-list-item-subtitle>
+              <v-list-item-subtitle>Project Manager</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -25,29 +25,29 @@
           nav
           dense
         >
-          <v-list-item link to="/rx-prescription">
+          <v-list-item link to="/dashboard">
             <v-list-item-icon>
-              <v-icon>mdi-prescription</v-icon>
+              <v-icon>mdi-creation</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Create Presciption</v-list-item-title>
+            <v-list-item-title>Dashboard</v-list-item-title>
           </v-list-item>
-          <v-list-item link to="/create-appointment">
+          <v-list-item link to="bug-list">
             <v-list-item-icon>
-              <v-icon>mdi-clipboard-plus</v-icon>
+              <v-icon>mdi-bug-check</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Create Appointment</v-list-item-title>
+            <v-list-item-title>Bug Controller</v-list-item-title>
           </v-list-item>
-          <v-list-item link to="appointment-list">
+          <v-list-item link to="/projects">
             <v-list-item-icon>
-              <v-icon>mdi-clipboard-text</v-icon>
+              <v-icon>mdi-application</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Appointment List</v-list-item-title>
+            <v-list-item-title>Projects</v-list-item-title>
           </v-list-item>
-          <v-list-item link to="generic-controller">
+          <v-list-item link to="team-members">
             <v-list-item-icon>
-              <v-icon>mdi-pill</v-icon>
+              <v-icon>mdi-account-supervisor-circle-outline</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Generic Contoller</v-list-item-title>
+            <v-list-item-title>Team Members</v-list-item-title>
           </v-list-item>
         </v-list>
     </v-navigation-drawer>

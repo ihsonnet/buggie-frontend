@@ -11,23 +11,23 @@
       <div class="d-flex align-center">
         <v-img
           alt="Vuetify Name"
-          class="shrink mt-1 mr-2"
+          class="shrink bt-2 mr-2"
           contain
           min-width="100"
           src="../assets/hero-logo.png"
-          width="100"
+          width="140"
         />
       </div>
 
       <v-spacer></v-spacer>
 
       <v-btn
-        color="primary"
-        to="rx-prescription"
+        color="#E5606B"
+        to="#"
         text
       >
-        <v-icon>mdi-prescription</v-icon>
-        <span class="mr-2">New Prescription</span>
+        <v-icon>mdi-exit-to-app</v-icon>
+        <span class="mr-2">Log Out</span>
       </v-btn>
     </v-app-bar>
     <side-nav></side-nav>
