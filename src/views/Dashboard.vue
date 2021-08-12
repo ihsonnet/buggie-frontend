@@ -55,6 +55,9 @@
                                                     <b>Email:</b> <br>ihsonnet@gmail.com
                                                 </v-card-subtitle>
                                             </v-col>
+                                            <v-col align-self="center">
+                                                <v-chip color="purple" class="white--text" small link><b>@ihsonnet</b></v-chip>
+                                            </v-col>
                                        </v-row>
                                        <v-row>
                                             <v-col>
@@ -329,7 +332,7 @@ export default {
          show(){ 
             return 0   
         }
-    }
+    },
 }
 </script>
 <style lang="scss" scoped>

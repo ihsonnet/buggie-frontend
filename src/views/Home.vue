@@ -23,7 +23,7 @@
 
       <v-btn
         color="#E5606B"
-        to="#"
+        to="/auth/signin"
         text
       >
         <v-icon>mdi-exit-to-app</v-icon>
@@ -47,7 +47,15 @@ export default {
   data () {
     return {
     }
-  }
+  },
+  beforeMount(){
+      if(localStorage.accTkn == undefined){
+            this.$router.push("/auth/signin")
+        }
+  },
+  mounted(){
+        // this.getProfileInfo();
+    }
 }
 </script>
 
