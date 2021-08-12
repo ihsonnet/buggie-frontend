@@ -22,9 +22,9 @@
       <v-spacer></v-spacer>
 
       <v-btn
-        color="#E5606B"
-        to="/auth/signin"
-        text
+        @click="logout()"
+        color="#e55a67"
+        outlined
       >
         <v-icon>mdi-exit-to-app</v-icon>
         <span class="mr-2">Log Out</span>
@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import axios from "axios"
 import SideNav from '../views/SideNav.vue'
 export default {
   name: 'App',
@@ -46,15 +47,48 @@ export default {
   },
   data () {
     return {
+      GET_LOGGED_IN_PROFILE_API: "https://buggie-backend.herokuapp.com/auth/user-info",
+      user: {},
+      auth: "Bearer " + localStorage.getItem("token"),
     }
   },
+  methods: {
+    getProfileInfo() {
+      console.log(this.auth)
+      axios({
+        method: "get",
+        url: this.GET_LOGGED_IN_PROFILE_API,
+        headers: {
+          Authorization: this.auth,
+          "Content-Type": "application/json"
+        }
+      })
+      .then(r => {
+      console.log(r.data)
+      this.user = r.data;
+      localStorage.setItem("userInfo", JSON.stringify(r.data));
+      // location.reload();
+              })
+      .catch(r => {
+        console.log(r)
+      });
+    },
+    logout(){
+      localStorage.removeItem("token")
+      localStorage.removeItem("userInfo")
+      this.$router.push("/auth/signin")
+    },
+  },
   beforeMount(){
-      if(localStorage.accTkn == undefined){
+      if(localStorage.token == undefined){
             this.$router.push("/auth/signin")
         }
+      else{
+            this.getProfileInfo();
+      }
   },
   mounted(){
-        // this.getProfileInfo();
+      console.log("mounted")
     }
 }
 </script>

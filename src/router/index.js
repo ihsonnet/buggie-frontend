@@ -24,28 +24,28 @@ const router = new VueRouter({
           component: Prescription
         },
         {
-          path: 'create-appointment',
-          name: 'Create Appointment',
+          path: 'bug-list',
+          name: 'BugController',
           // route level code-splitting
           // this generates a separate chunk (about.[hash].js) for this route
           // which is lazy-loaded when the route is visited.
-          component: () => import(/* webpackChunkName: "about" */ '../views/CreateAppointment.vue')
+          component: () => import(/* webpackChunkName: "about" */ '../views/BugController.vue')
         },
         {
-          path: 'appointment-list',
-          name: 'Appointment List',
+          path: 'projects',
+          name: 'ProjectController',
           // route level code-splitting
           // this generates a separate chunk (about.[hash].js) for this route
           // which is lazy-loaded when the route is visited.
-          component: () => import(/* webpackChunkName: "about" */ '../views/AppointmentList.vue')
+          component: () => import(/* webpackChunkName: "about" */ '../views/ProjectController.vue')
         },
         {
-          path: 'generic-controller',
-          name: 'Generic Controller',
+          path: 'team-members',
+          name: 'TeamController',
           // route level code-splitting
           // this generates a separate chunk (about.[hash].js) for this route
           // which is lazy-loaded when the route is visited.
-          component: () => import(/* webpackChunkName: "about" */ '../views/needDoctors/GenericController.vue')
+          component: () => import(/* webpackChunkName: "about" */ '../views/TeamController.vue')
         }
       ]
     },

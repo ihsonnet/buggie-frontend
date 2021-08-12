@@ -25,20 +25,20 @@
             center
             rounded="pill" class="text-center"
             top
-            color="red"
+            color="#e55a67"
             >
             {{ apiResponse }}
             </v-snackbar>
             <v-row style="margin-top:8%;vertical-align: middle; !important" align="center" justify="center">
-            <v-col style="margin-left:35%;" class="d-flex flex-column justify-center align-center">
+            <v-col class="d-flex justify-center align-center">
 
-            <v-card flat tile style="padding:2.5%; !important" color="white" width="400" max-height="1000">
+            <v-card flat style="padding:2.5%;border:1px solid #d6d9db;margin: auto; !important" color="white" width="400" max-height="1000">
             <v-progress-linear
                 :active="dialog"
                 :indeterminate="dialog"
                 absolute
                 top
-                color="matgreen"
+                color="#AD74B8"
             ></v-progress-linear>
                 <div align="center">
                     <v-img max-width='200' min-width="170" height='80' src="@/assets/hero-logo.png"></v-img>
@@ -49,6 +49,7 @@
                     <v-text-field dense
                         v-model="email"
                         label="E-mail"
+                        type="email"
                         :rules="[rules.required]"
                         required
                         outlined
@@ -89,14 +90,14 @@
             </v-col>
             </v-row>
             <v-footer fixed>
-                Copyroght Buggie | 2021
+                <p style="text-align:center;margin:auto; !important">Copyright © Buggie | 2021</p> 
             </v-footer>
         </v-container>
 </template>
 
 <script>
 import axios from 'axios';
-const API_URL = 'https://dokanee-backend-monolithic.herokuapp.com/'
+const API_URL = 'https://buggie-backend.herokuapp.com/'
 const LOGIN_URL = API_URL + 'auth/signin/'
 const SIGNUP_URL = API_URL + 'auth/signup'
 const options = {
@@ -147,18 +148,16 @@ export default {
     axios.post(LOGIN_URL, data)
     .then(response => {
       console.log(response)
-      localStorage.setItem('id_token', response.id_token)
-      localStorage.setItem('access_token', response.data.accessToken)
-      localStorage.setItem("role",response.data.role)
+      localStorage.setItem('token', response.data.accessToken)
     
       // this.user.authenticated = true
       console.log(localStorage)
       // Redirect to a specified route
-      this.$router.push("/cpanel/dashboard");
+      this.$router.push("/");
     })
     .catch(err => {
       console.log(err.response)
-      if (err.response.status === 401) {
+      if (err.response.status === 400) {
       // client received an error response (5xx, 4xx)
      this.apiResponse = "Password or Email or Both didn't match!";
       this.dialog = false;
@@ -177,14 +176,10 @@ export default {
     }
   },
   mounted(){
-    let token = localStorage.getItem('access_token');
-    if(token != null) {
-  console.log("already logged in");
-  // window.location.href = "http://localhost:8080/#/cpanel/dashboard";
-  this.$router.push("/cpanel/dashboard");
+    if(localStorage.token!= undefined){
+      this.$router.push("/");
     }
-         
-  },
+  }
   //   watch: {
   //     response (val) {
   //       console.log("logging" + val);
