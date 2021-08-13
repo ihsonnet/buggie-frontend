@@ -138,7 +138,7 @@ export default {
     },
  mounted(){
      this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
-     this.formData.createdBy = this.userInfo.id;
+     this.formData.created_by = this.userInfo.username;
    // if(localStorage.getItem("access_token"))
  },
     methods: {

@@ -1,4 +1,4 @@
-# a2s-dms-rx
+# Buggie | Bug management system
 
 ## Project setup
 ```
