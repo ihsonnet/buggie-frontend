@@ -31,7 +31,7 @@
             </v-list-item-icon>
             <v-list-item-title>Dashboard</v-list-item-title>
           </v-list-item>
-          <v-list-item link to="bug-list">
+          <v-list-item disabled link to="bug-list">
             <v-list-item-icon>
               <v-icon>mdi-bug-check</v-icon>
             </v-list-item-icon>
@@ -43,11 +43,11 @@
             </v-list-item-icon>
             <v-list-item-title>Projects</v-list-item-title>
           </v-list-item>
-          <v-list-item link to="team-members">
+          <v-list-item link to="about">
             <v-list-item-icon>
-              <v-icon>mdi-account-supervisor-circle-outline</v-icon>
+              <v-icon>mdi-information-outline</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Team Members</v-list-item-title>
+            <v-list-item-title>About</v-list-item-title>
           </v-list-item>
         </v-list>
     </v-navigation-drawer>

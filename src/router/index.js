@@ -40,6 +40,32 @@ const router = new VueRouter({
           component: () => import(/* webpackChunkName: "about" */ '../views/ProjectController.vue')
         },
         {
+          path: 'project/:projectId',
+          name: 'ProjectInfo',
+          // route level code-splitting
+          // this generates a separate chunk (about.[hash].js) for this route
+          // which is lazy-loaded when the route is visited.
+          component: () => import(/* webpackChunkName: "about" */ '../views/Project/ProjectInfo.vue'),
+          children: [
+            {
+              path: 'bugs',
+              name: 'BugController',
+              // route level code-splitting
+              // this generates a separate chunk (about.[hash].js) for this route
+              // which is lazy-loaded when the route is visited.
+              component: () => import(/* webpackChunkName: "about" */ '../views/BugController.vue'),
+            },
+            {
+              path: 'members',
+              name: 'MemberController',
+              // route level code-splitting
+              // this generates a separate chunk (about.[hash].js) for this route
+              // which is lazy-loaded when the route is visited.
+              component: () => import(/* webpackChunkName: "about" */ '../views/MemberController.vue'),
+            }
+          ]
+        },
+        {
           path: 'team-members',
           name: 'TeamController',
           // route level code-splitting
@@ -64,6 +90,14 @@ const router = new VueRouter({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ '../views/Auth/SignIn.vue')
+    },
+    {
+      path: '/auth/signup',
+      name: 'SignUp',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "about" */ '../views/Auth/SignUp.vue')
     },
   ]
 })

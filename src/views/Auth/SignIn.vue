@@ -1,34 +1,15 @@
 <template>
         <v-container class="full-height" fluid>
-        <!-- <v-row justify="center" align-content="center">
-            <v-col class="mx-20 my-10">
-                 <div class="d-flex align-center">
-                    <v-img
-                    alt="Vuetify Name"
-                    class="shrink bt-2 mr-2"
-                    contain
-                    min-width="100"
-                    src="@/assets/hero-logo.png"
-                    width="140"
-                    />
-                </div>
-                <v-card elevation="0" width="400px" height="250px">
-                   <h4>Sign In</h4>
-                </v-card>
-            </v-col>
-        </v-row> -->
 
-        <v-snackbar
-            v-model="alert"
-            timeout=3000
-            absolute
-            center
-            rounded="pill" class="text-center"
-            top
-            color="#e55a67"
-            >
-            {{ apiResponse }}
-            </v-snackbar>
+        <div style="padding-top:25px; position: fixed;z-index:1;right:20px">
+            <v-alert v-if="successMsg" color="#4BCA81" text type="success">
+            {{apiResponse}}
+            </v-alert>
+
+            <v-alert v-if="errorMsg" text color="#E4515D" type="error">
+              {{apiResponse}}
+            </v-alert>
+          </div>
             <v-row style="margin-top:8%;vertical-align: middle; !important" align="center" justify="center">
             <v-col class="d-flex justify-center align-center">
 
@@ -114,6 +95,8 @@ export default {
       dialog: false,
         apiResponse: null,
       alert: false,
+      successMsg: false,
+      errorMsg: false,
       response: "",
        rules: {
           required: value => !!value || 'Required.',
@@ -157,12 +140,13 @@ export default {
     })
     .catch(err => {
       console.log(err.response)
-      if (err.response.status === 400) {
+      if (err.response.status === 401) {
       // client received an error response (5xx, 4xx)
      this.apiResponse = "Password or Email or Both didn't match!";
       this.dialog = false;
       this.alert = true;
-       
+      this.successMsg = false;
+      this.errorMsg = true;
     } else if (err.request) {
       // client never received a response, or request never left
     } else {

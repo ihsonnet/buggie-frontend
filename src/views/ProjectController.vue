@@ -65,8 +65,8 @@
             <v-col lg="" md="9" sm="12" cols="12">
                 <v-card  class="ma-5" elevation="0"> 
                 <v-row >
-                        <v-col v-for="item in userInfo.projects" :key="item">
-                           <v-card elevation="0" width="320" class="my-2 pa-2" link :color="getRandomColor()">
+                        <v-col v-for="item in  userInfo.projects" :key="item.id">
+                           <v-card elevation="0" width="320" class="my-2 pa-2" link :to="'project/'+item.id" :color="getRandomColor()">
                                <v-row>
                                    <v-col cols="3">
                                        <v-icon class="mx-5 my-7" x-large>mdi-code-tags</v-icon>
@@ -133,7 +133,19 @@ export default {
                         "name": "",
                         "createdBy": ""
                     }
-                }
+                },
+                items: [
+                {
+                text: 'Buggie',
+                disabled: false,
+                href: '/',
+                },
+                {
+                text: 'Projects',
+                disabled: true,
+                href: 'projects',
+                },
+            ],
         }
     },
  mounted(){
@@ -160,27 +172,21 @@ export default {
             data: this.formData,
             url: this.PROJECT_URL,
             headers: {
-            Authorization: this.auth,
-            "Content-Type": "application/json"
+                Authorization: this.auth,
+                "Content-Type": "application/json"
+                
             }
         })
         .then(response => {
             console.log(response)
-            if(response.status == 200){
-            if(response.data.massage != "OK") {
-                this.apiResponse = response.data.massage;
-                this.successMsg=false;
-                this.errorMsg = true;
-                this.loadingResponse = false;
-                }else{
-                this.apiResponse = "Account has been created successfully!";
+            if(response.status == 201){
+                this.apiResponse = "Project created successfully!";
                 this.errorMsg = false;
-                this.successMsg=true;
+                this.successMsg = true;
                 this.loadingResponse = false;
-                }
             }
             else{
-            this.apiResponse = response.data.massage;
+            this.apiResponse = response.data.messege;
                 this.successMsg=false;
                 this.errorMsg = true;
                 this.loadingResponse = false;

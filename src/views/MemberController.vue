@@ -7,39 +7,13 @@
             </template>
             </v-breadcrumbs>
         </v-card>
+        <v-container>
         <v-row>
-            <v-col lg="3" md="3" sm="12" cols="12">
-                <v-card flat  class="ma-5" elevation="0">
-                    <h4>My Projects:</h4>
-                    <br>
-                    <v-row v-for="item in userInfo.projects" :key="item">
-                        <v-col>
-                           <v-card elevation="0" class="my-2" :color="getRandomColor()" link :to="'project/'+item.id">
-                               <v-row>
-                                   <v-col cols="3">
-                                       <v-icon class="mx-5 my-7" x-large>mdi-code-tags</v-icon>
-                                   </v-col>
-                                   <v-col cols="9">
-                                       <h3>{{item.name}}</h3>
-                                       <small style="font-size:12;color:gray">By @{{item.created_by}}</small> 
-                                       <br>
-                                       <small>{{item.description}}</small>
-                                   </v-col>
-                               </v-row>
-                           </v-card>
-                        </v-col>
-                    </v-row>
-                </v-card>
-            </v-col>
-            <v-divider
-            class="mx-0"
-            vertical
-            ></v-divider>
             <v-col lg="" md="9" sm="12" cols="12">
                 <v-card  class="ma-5" elevation="0">
                    <v-row>
                         <v-col>
-                            <v-card color="purple lighten-5" outlined class="mt-2" elevation="0" style="border: 1px solid #e7e7e7" width="100%">
+                            <v-card color="teal lighten-5" outlined class="mt-2" elevation="0" style="border: 1px solid #e7e7e7" width="100%">
                                 <v-row>
                                    <v-col cols="3">
                                        <v-img sizes="10" class="ma-5 mx-15" style="width:150px;border:1px solid gray;border-radius:100px!important" src="https://avatars.githubusercontent.com/u/48057930?v=4"></v-img>
@@ -228,6 +202,7 @@
         </v-btn-group>
         </v-card>
     </v-dialog>
+    </v-container>
     </div>
 </template>
 <script>
@@ -359,14 +334,10 @@ export default {
          show(){ 
             return 0   
         },
-        
-    },
-    beforeMount(){
-        
     },
     mounted(){
         this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    },
+    }
 }
 </script>
 <style lang="scss" scoped>
