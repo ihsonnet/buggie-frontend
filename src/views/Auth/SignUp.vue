@@ -174,14 +174,14 @@ export default {
                 },
                 },
             formData: {
-                address: "Dhaka, Bangladesh",
+                address: "",
                 createdBy: "",
-                createdOn: "string",
-                email: "onikrs1@gmail.com",
-                firstName: "Shahriar",
-                lastName: "Onik",
-                password: "12345678",
-                phoneNo: "01734543028",
+                createdOn: "",
+                email: "",
+                firstName: "",
+                lastName: "",
+                password: "",
+                phoneNo: "",
                 role: [
                     "PROJECT_MANAGER"
                 ]

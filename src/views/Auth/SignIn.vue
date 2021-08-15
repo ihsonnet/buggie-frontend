@@ -53,19 +53,22 @@
                     <!-- <br/>
                     <br/>
                     <br/> -->
-                    <v-row>
-                        <!-- <v-btn
-                            class="elevation-0"
-                            style="margin-left:2.5%"
+                    <br>
+                    <v-row class="mt-8">
+                        <v-col>
+                          <v-btn
+                            class="mt-4 mx-0"
+                            elevation="0"
                             to="signup"
                             >
                             Create An Account
-                            </v-btn> -->
+                            </v-btn>
+                        </v-col>
                             <!-- <v-btn style="color:#666;text-decoration: none;margin-left:2.5%" href="#/auth/signup">Create An Account</v-btn> -->
-                            <v-col  style="text-align:center" class="pb-0 pt-0">
-                <v-btn color="#BB79B8" @click="submit">Sign In</v-btn>
-            </v-col>
-        </v-row>
+                                    <v-col  style="text-align:center" class="pb-0 pt-0">
+                        <v-btn color="#BB79B8" @click="submit">Sign In</v-btn>
+                    </v-col>
+                </v-row>
                 </v-form>
                 </v-card>
             </v-col>
