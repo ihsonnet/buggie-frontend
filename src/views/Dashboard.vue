@@ -7,7 +7,17 @@
             </template>
             </v-breadcrumbs>
         </v-card>
-        <v-row>
+        <v-row v-if="!userInfo" style="margin-top:20px;text-align:center;vertical-align:middle !important">
+            <v-col style="margin:auto">
+                <v-progress-circular
+                :size="70"
+                :width="7"
+                color="#d4d6d8"
+                indeterminate
+                ></v-progress-circular>
+            </v-col>
+        </v-row>
+        <v-row v-if="userInfo">
             <v-col lg="3" md="3" sm="12" cols="12">
                 <v-card flat  class="ma-5" elevation="0">
                     <h4>My Projects:</h4>
@@ -231,53 +241,17 @@
     </div>
 </template>
 <script>
+import axios from "axios"
 export default {
     data() {
         return {
             idx:0,
             input: "",
             adddialog: false,
-            userInfo: {
-                    "id": "",
-                    "firstName": "",
-                    "lastName": "",
-                    "email": "",
-                    "username": "",
-                    "phoneNo": "",
-                    "projects": [
-                        {
-                        "id": "",
-                        "name": "",
-                        "description": "",
-                        "created_by": "",
-                        "created_on": null
-                        }
-                    ],
-                    "userRole": [
-                        "PROJECT_MANAGER"
-                    ],
-                    "isAuthenticated": true,
-                    "teamDetails": {
-                        "id": "",
-                        "name": "",
-                        "createdBy": ""
-                    }
-                    }
-                    ,
-            sideItems: [
-                {
-                    testTitle: "Cheif Complaints",
-                },
-                {
-                    testTitle: "On Examination",
-                },
-                {
-                    testTitle: "Diagnosis",
-                },
-                {
-                    testTitle: "Investigation Advice",
-                }
-            ],
+            GET_LOGGED_IN_PROFILE_API: "https://buggie-backend.herokuapp.com/auth/user-info",
+            user: {},
+            auth: "Bearer " + localStorage.getItem("token"),
+            userInfo: {},
             items: [
                 {
                 text: 'Buggie',
@@ -310,45 +284,29 @@ export default {
         }
     },
     methods: {
-        randomColor(){ 
-            this.idx++;
-            var randomColor = (Math.random()*0xFFFFFF<<0).toString(16)
-            // var colorName= [
-            //     "Blue",
-            //     "Cyan",
-            //     "Fuchsia",
-            //     "Gray",
-            //     "Green",
-            //     "Indigo",
-            //     "Magenta",
-            //     "Navy",
-            //     "Pink",
-            //     "Purple",
-            //     "Red",
-            //     "SkyBlue",
-            //     "Teal",
-            //     "Thistle",
-            //     "Tomato",
-            //     "Turquoise",
-            //     "Violet",
-            //     "Wheat",
-            //     "White",
-            //     "WhiteSmoke",
-            //     "Yellow",
-            //     "YellowGreen",
-            //     ]
-            //     var color = colorName[12].toString();
+        getProfileInfo() {
+      console.log(this.auth)
+      axios({
+        method: "get",
+        url: this.GET_LOGGED_IN_PROFILE_API,
+        headers: {
+          Authorization: this.auth,
+          "Content-Type": "application/json"
+        }
+      })
+        .then(r => {
+        console.log(r.data)
+        this.userInfo = r.data;
+        localStorage.setItem("userInfo", JSON.stringify(r.data));
+        this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        console.log(this.userInfo.firstName)
 
-            return  "#"+randomColor;
+        // location.reload();
+                })
+        .catch(r => {
+            console.log(r)
+        });
         },
-        // randomColor() {
-        //         var letters = 'BCDEF'.split('');
-        //         var color = '#';
-        //         for (var i = 0; i < 6; i++ ) {
-        //             color += letters[Math.floor(Math.random() * letters.length)];
-        //         }
-        //         return color;
-        //     },
         getRandomColor() {
         return 'rgb(' + 
             (Math.floor(Math.random()*56)+200) + ', ' +
@@ -361,11 +319,9 @@ export default {
         },
         
     },
-    beforeMount(){
-        
-    },
     mounted(){
         this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        this.getProfileInfo();
     },
 }
 </script>

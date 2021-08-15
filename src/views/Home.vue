@@ -76,6 +76,7 @@ export default {
     logout(){
       localStorage.removeItem("token")
       localStorage.removeItem("userInfo")
+      localStorage.removeItem("projectInfo")
       this.$router.push("/auth/signin")
     },
   },

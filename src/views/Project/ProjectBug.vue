@@ -7,17 +7,7 @@
             </template>
             </v-breadcrumbs>
         </v-card>
-         <v-row v-if="isLoading2" style="margin-top:20px;text-align:center;vertical-align:middle !important">
-            <v-col style="margin:auto">
-                <v-progress-circular
-                :size="70"
-                :width="7"
-                color="#d4d6d8"
-                indeterminate
-                ></v-progress-circular>
-            </v-col>
-        </v-row>
-        <v-row v-if="!isLoading2">
+        <v-row>
             <v-col lg="3" md="3" sm="12" cols="12">
                 <v-card flat color="teal lighten-5"  class="ma-5" elevation="0" style="border-top: 1px solid gray;">
                     <v-row class="pa-5">
@@ -34,8 +24,9 @@
                         <v-btn
                             color="blue lighten-1"
                             outlined
+                            disabled
                             block
-                            to="bugs"
+                            to="'bugs'"
                         >
                             <v-icon>mdi-bug</v-icon>
                             <span class="mr-2">Bug Contoller</span>
@@ -48,7 +39,7 @@
                             color="purple lighten-1"
                             outlined
                             block
-                            to="members"
+                            :to="'members'"
                         >
                             <v-icon>mdi-account-supervisor-circle-outline   </v-icon>
                             <span class="mr-2">Project Members</span>
@@ -64,9 +55,89 @@
             <!--Main Col 2 -->
             <v-col lg="" md="9" sm="12" cols="12">
 
-                <v-card  class="ma-5" elevation="0">
+                  <v-card  class="ma-5" elevation="0">
 
-                <router-view></router-view>
+                    <!-- Add new bug  -->
+                   <v-row>
+                        <v-col>
+                            <v-card style="border: 1px solid #e7e7e7;text-align:center !important" color="#F2F5F8" outlined class="mt-2 pa-4" elevation="0" width="100%">
+                                <v-icon color="blue lighten-1" x-large>mdi-baby-buggy</v-icon>
+                                <br><br>
+                                <v-row justify="center" align-content="center">
+                                   <v-col style="margin:auto;text-align:center">
+                                       <p>As a Tester You can Add a new bug to this project by giving some information</p>
+                                   </v-col>
+                                </v-row>
+                                <v-btn
+                                    color="blue lighten-2 white--text"
+                                    elevation="0"
+                                >
+                                    <v-icon>mdi-bug</v-icon>
+                                    <span class="mr-2">Add New Bug</span>
+                                </v-btn>
+                            </v-card>
+                        </v-col>
+                   </v-row>
+
+                    <!-- bug list  -->
+                    <v-row>
+                       <v-col>
+                           <v-card class="pa-4 mt-2" elevation="0" style="border: 1px solid #e7e7e7" width="100%">
+                               <v-row class="pa-5">
+                                   <v-icon large>mdi-bug</v-icon> <h3 class="mt-1 ml-2">Resent Bugs</h3>
+                                   <!-- <v-spacer></v-spacer> <v-btn depressed @click="adddialog = true" color="info">Add Drugs</v-btn> -->
+                               </v-row>
+                               <v-row style="background-color:#f2f5f8;border-radius:8px;text-align:center">
+                                   <v-col cols="3">
+                                       <b>Title</b>
+                                   </v-col>
+                                   <v-col>
+                                       <b>Created By</b>
+                                   </v-col>
+                                   <v-col>
+                                       <b>Approve Status</b>
+                                   </v-col>
+                                   <v-col>
+                                       <b>Bug Status</b>
+                                   </v-col>
+                                   <v-col>
+                                       <b>Action</b>
+                                   </v-col>
+                               </v-row>
+                               <v-row v-for="drug in 3" :key="drug" style="text-align:center;border-bottom: 1px solid #e7e7e7">
+                                    <v-col class="ml-2" style="text-align:left" cols="3">
+                                        <h5 class="mt-2">
+                                            Issu: Normal user can edit project
+                                        </h5>
+                                        <v-chip x-small color="orange lighten-1">Web Development</v-chip>
+                                    </v-col>
+                                    <v-col>
+                                        <v-card-subtitle>
+                                            ihsonnet
+                                        </v-card-subtitle>
+                                    </v-col>
+                                    <v-col>
+                                        <v-card-subtitle>
+                                            No Action
+                                        </v-card-subtitle>
+                                    </v-col>
+                                    <v-col>
+                                        <v-card-subtitle>
+                                            <v-chip small color="red lighten-3">New</v-chip>
+                                        </v-card-subtitle>
+                                    </v-col>
+                                    <v-col>
+                                        <v-card-subtitle>
+                                          
+                                                <v-btn color="info" depressed small><v-icon small>mdi-pencil-outline</v-icon></v-btn><v-btn color="error" depressed small><v-icon small>mdi-delete</v-icon></v-btn>
+                                          
+                                        </v-card-subtitle>
+                                    </v-col>
+                               </v-row>
+                           </v-card>
+                       </v-col>
+                   </v-row>
+
 
 
                 </v-card>
@@ -92,10 +163,9 @@ export default {
     return {
       idx: 0,
       input: "",
-      adddialog: false,
+      adddialog: true,
       selectedProject: "",
       projectInfo: {},
-      isLoading2: true,
       memberSelected: true,
       bugSelected: false,
         PROJECT_API:"https://buggie-backend.herokuapp.com/project/",
@@ -183,7 +253,6 @@ export default {
         .then(r => {
             console.log(r.data)
             this.projectInfo = r.data.data;
-            this.isLoading2 = false;
             localStorage.setItem("projectInfo", JSON.stringify(r.data));
             this.items[2].text = this.projectInfo.name;
             // location.reload();
@@ -197,7 +266,6 @@ export default {
         var length = location.length;
         for (let i = 0; i < length; i++) {
             if(location[i].id == id){
-                localStorage.setItem("myRole", JSON.stringify(location[i].roles));
                 return location[i].roles[0].name;
             }
             

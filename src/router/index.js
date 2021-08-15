@@ -29,7 +29,7 @@ const router = new VueRouter({
           // route level code-splitting
           // this generates a separate chunk (about.[hash].js) for this route
           // which is lazy-loaded when the route is visited.
-          component: () => import(/* webpackChunkName: "about" */ '../views/BugController.vue')
+          component: () => import(/* webpackChunkName: "about" */ '../views/Project/BugController.vue')
         },
         {
           path: 'projects',
@@ -39,13 +39,32 @@ const router = new VueRouter({
           // which is lazy-loaded when the route is visited.
           component: () => import(/* webpackChunkName: "about" */ '../views/ProjectController.vue')
         },
+        // {
+        //   path: 'project/:projectId/bugs',
+        //   name: 'ProjectBugs',
+        //   // route level code-splitting
+        //   // this generates a separate chunk (about.[hash].js) for this route
+        //   // which is lazy-loaded when the route is visited.
+        //   component: () => import(/* webpackChunkName: "about" */ '../views/Project/ProjectBug.vue'),
+        //   // redirect: { name: 'MemberController' },
+        // },
+        // {
+        //   path: 'project/:projectId/members',
+        //   name: 'ProjectMembers',
+        //   // route level code-splitting
+        //   // this generates a separate chunk (about.[hash].js) for this route
+        //   // which is lazy-loaded when the route is visited.
+        //   component: () => import(/* webpackChunkName: "about" */ '../views/Project/ProjectMembers.vue'),
+        //   // redirect: { name: 'MemberController' },
+        // },
         {
-          path: 'project/:projectId',
+          path: 'project/:projectId/',
           name: 'ProjectInfo',
           // route level code-splitting
           // this generates a separate chunk (about.[hash].js) for this route
           // which is lazy-loaded when the route is visited.
           component: () => import(/* webpackChunkName: "about" */ '../views/Project/ProjectInfo.vue'),
+          redirect: { name: 'MemberController' },
           children: [
             {
               path: 'bugs',
@@ -53,7 +72,7 @@ const router = new VueRouter({
               // route level code-splitting
               // this generates a separate chunk (about.[hash].js) for this route
               // which is lazy-loaded when the route is visited.
-              component: () => import(/* webpackChunkName: "about" */ '../views/BugController.vue'),
+              component: () => import(/* webpackChunkName: "about" */ '../views/Project/BugController.vue'),
             },
             {
               path: 'members',
@@ -61,7 +80,7 @@ const router = new VueRouter({
               // route level code-splitting
               // this generates a separate chunk (about.[hash].js) for this route
               // which is lazy-loaded when the route is visited.
-              component: () => import(/* webpackChunkName: "about" */ '../views/MemberController.vue'),
+              component: () => import(/* webpackChunkName: "about" */ '../views/Project/MemberController.vue'),
             }
           ]
         },
@@ -76,7 +95,7 @@ const router = new VueRouter({
       ]
     },
     {
-      path: '/about',
+      path: 'about',
       name: 'About',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route

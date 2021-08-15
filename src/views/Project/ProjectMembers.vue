@@ -7,17 +7,7 @@
             </template>
             </v-breadcrumbs>
         </v-card>
-         <v-row v-if="isLoading2" style="margin-top:20px;text-align:center;vertical-align:middle !important">
-            <v-col style="margin:auto">
-                <v-progress-circular
-                :size="70"
-                :width="7"
-                color="#d4d6d8"
-                indeterminate
-                ></v-progress-circular>
-            </v-col>
-        </v-row>
-        <v-row v-if="!isLoading2">
+        <v-row>
             <v-col lg="3" md="3" sm="12" cols="12">
                 <v-card flat color="teal lighten-5"  class="ma-5" elevation="0" style="border-top: 1px solid gray;">
                     <v-row class="pa-5">
@@ -35,7 +25,7 @@
                             color="blue lighten-1"
                             outlined
                             block
-                            to="bugs"
+                            :to="'bugs'"
                         >
                             <v-icon>mdi-bug</v-icon>
                             <span class="mr-2">Bug Contoller</span>
@@ -47,8 +37,9 @@
                         <v-btn
                             color="purple lighten-1"
                             outlined
+                            disabled
                             block
-                            to="members"
+                            :to="'members'"
                         >
                             <v-icon>mdi-account-supervisor-circle-outline   </v-icon>
                             <span class="mr-2">Project Members</span>
@@ -66,7 +57,98 @@
 
                 <v-card  class="ma-5" elevation="0">
 
-                <router-view></router-view>
+                <!-- Assign Member  -->
+                   <v-row>
+                        <v-col>
+                            <v-card style="border: 1px solid #e7e7e7;text-align:center !important" color="#F2F5F8" outlined class="mt-2 pa-4" elevation="0" width="100%">
+                                <v-icon color="blue lighten-1" x-large>mdi-account-network</v-icon>
+                                <br><br>
+                                <v-row justify="center" align-content="center">
+                                   <v-col style="margin:auto;text-align:center">
+                                       <p>As a project manager You can Assigned new member to this project by using their email.</p>
+                                   </v-col>
+                                </v-row>
+                                <v-btn
+                                    color="blue lighten-2 white--text"
+                                    elevation="0"
+                                    @click="adddialog = true"
+                                >
+                                    <v-icon>mdi-account-plus</v-icon>
+                                    <span class="mr-2">Assigne New Member</span>
+                                </v-btn>
+                            </v-card>
+                        </v-col>
+                   </v-row>
+
+                       <!-- member list  -->
+                   <v-row>
+                       <v-col>
+                           <v-card class="pa-4 mt-2" elevation="0" style="border: 1px solid #e7e7e7" width="100%">
+                               <v-row class="pa-5">
+                                   <v-icon large>mdi-bug</v-icon> <h3 class="mt-1 ml-2">Members of ( {{projectInfo.name}} )</h3>
+                                   <!-- <v-spacer></v-spacer> <v-btn depressed @click="adddialog = true" color="info">Add Drugs</v-btn> -->
+                               </v-row>
+                               <v-row style="background-color:#f2f5f8;border-radius:8px;text-align:center">
+                                   <v-col cols="4">
+                                       <b>Name</b>
+                                   </v-col>
+                                   <v-col>
+                                       <b>Role</b>
+                                   </v-col>
+                                   <v-col>
+                                       <b>Email</b>
+                                   </v-col>
+                                   <v-col>
+                                       <b>Phone</b>
+                                   </v-col>
+                                   <v-col>
+                                       <b>Action</b>
+                                   </v-col>
+                               </v-row>
+                               <v-row v-for="member in projectInfo.members" :key="member.id" style="text-align:center;border-bottom: 1px solid #e7e7e7">
+                                    <v-col class="ml-2" style="text-align:left" cols="4">
+
+                                        <v-row>
+                                            <v-col cols="3">
+                                               <v-avatar
+                                               class="ma-3 white--text"
+                                                :color="getRandomColor()"
+                                                size="42"
+                                                ><h3>{{member.firstName.charAt(0)}}</h3></v-avatar>
+                                            </v-col>
+                                            <v-col>
+                                                 <h5 class="mt-2">
+                                                    {{member.firstName}} {{member.lastName}}
+                                                </h5>
+                                                <v-chip x-small color="purple lighten-2 white--text">@{{member.username}}</v-chip>    
+                                            </v-col>
+                                        </v-row>
+                                    </v-col>
+                                    <v-col>
+                                        <v-chip class="mt-3" small outlined color="teal">{{member.roles[0].name}}</v-chip>
+                                    </v-col>
+                                    <v-col>
+                                        <v-card-subtitle>
+                                            {{member.email}}
+                                        </v-card-subtitle>
+                                    </v-col>
+                                    <v-col>
+                                        <v-card-subtitle>
+                                            {{member.phoneNo}}
+                                        </v-card-subtitle>
+                                    </v-col>
+                                    <v-col>
+                                        <v-card-subtitle>
+                                           
+                                                <v-btn color="info" depressed small><v-icon small>mdi-pencil-outline</v-icon></v-btn><v-btn color="error" depressed small><v-icon small>mdi-delete</v-icon></v-btn>
+                                           
+                                        </v-card-subtitle>
+                                    </v-col>
+                               </v-row>
+                           </v-card>
+                       </v-col>
+                   </v-row>
+
 
 
                 </v-card>
@@ -92,10 +174,9 @@ export default {
     return {
       idx: 0,
       input: "",
-      adddialog: false,
+      adddialog: true,
       selectedProject: "",
       projectInfo: {},
-      isLoading2: true,
       memberSelected: true,
       bugSelected: false,
         PROJECT_API:"https://buggie-backend.herokuapp.com/project/",
@@ -183,7 +264,6 @@ export default {
         .then(r => {
             console.log(r.data)
             this.projectInfo = r.data.data;
-            this.isLoading2 = false;
             localStorage.setItem("projectInfo", JSON.stringify(r.data));
             this.items[2].text = this.projectInfo.name;
             // location.reload();
@@ -197,7 +277,6 @@ export default {
         var length = location.length;
         for (let i = 0; i < length; i++) {
             if(location[i].id == id){
-                localStorage.setItem("myRole", JSON.stringify(location[i].roles));
                 return location[i].roles[0].name;
             }
             
