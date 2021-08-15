@@ -52,7 +52,7 @@
                             <v-card color="purple lighten-5" outlined class="mt-2" elevation="0" style="border: 1px solid #e7e7e7" width="100%">
                                 <v-row>
                                    <v-col cols="3">
-                                       <v-img sizes="10" class="ma-5 mx-15" style="width:150px;border:1px solid gray;border-radius:100px!important" src="https://avatars.githubusercontent.com/u/48057930?v=4"></v-img>
+                                       <v-img sizes="10" class="ma-5 mx-15" style="width:150px;border:1px solid gray;border-radius:100px!important" src="https://i.ibb.co/vXPhN8g/eff3aeec8f45.jpg"></v-img>
                                    </v-col>
                                    <v-col cols="4">
                                        <h3 class="ma-4"><b>{{ userInfo.firstName }} {{ userInfo.lastName }}</b></h3>

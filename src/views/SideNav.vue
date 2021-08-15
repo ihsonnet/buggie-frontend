@@ -8,7 +8,7 @@
         <v-list>
           <v-list-item class="px-2" link>
             <v-list-item-avatar>
-              <v-img src="https://avatars.githubusercontent.com/u/48057930?v=4"></v-img>
+              <v-img src="https://i.ibb.co/vXPhN8g/eff3aeec8f45.jpg"></v-img>
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title class="text-h6">
