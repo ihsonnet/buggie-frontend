@@ -43,7 +43,7 @@
             </v-list-item-icon>
             <v-list-item-title>Projects</v-list-item-title>
           </v-list-item>
-          <v-list-item link to="about">
+          <v-list-item link to="/about">
             <v-list-item-icon>
               <v-icon>mdi-information-outline</v-icon>
             </v-list-item-icon>
