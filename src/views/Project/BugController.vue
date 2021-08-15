@@ -28,7 +28,7 @@
                 <v-card class="ma-5" elevation="0">
 
                     <!-- Add new bug  -->
-                   <v-row>
+                   <v-row v-if="tester()">
                         <v-col>
                             <v-card style="border: 1px solid #e7e7e7;text-align:center !important" color="#F2F5F8" outlined class="mt-2 pa-4" elevation="0" width="100%">
                                 <v-icon color="blue lighten-1" x-large>mdi-baby-buggy</v-icon>
@@ -53,11 +53,11 @@
                    </v-row>
 
                  <!-- bug list  -->
-                    <v-row>
+                    <v-row v-if="developer()">
                        <v-col>
                            <v-card class="pa-4 mt-2" elevation="0" style="border: 1px solid #e7e7e7" width="100%">
                                <v-row class="pa-5">
-                                   <v-icon large>mdi-bug</v-icon> <h3 class="mt-1 ml-2">Resent Bugs of ( {{projectMembers.name}} )</h3>
+                                   <v-icon large>mdi-bug</v-icon> <h3 class="mt-1 ml-2">Bugs Assigned to Me</h3>
                                    <!-- <v-spacer></v-spacer> <v-btn depressed @click="adddialog = true" color="info">Add Drugs</v-btn> -->
                                </v-row>
                                <v-row style="background-color:#f2f5f8;border-radius:8px;text-align:center">
@@ -76,8 +76,186 @@
                                    <v-col>
                                        <b>Action</b>
                                    </v-col>
+                               </v-row>
+                               <v-row v-for="bug in projectMembers.bugs" :key="bug.id" v-show="bug.approveStatus=='Approved'" style="text-align:center;border-bottom: 1px solid #e7e7e7">
+                                    <v-col class="ml-2" style="text-align:left" cols="3">
+                                        <h5 class="mt-2">
+                                            {{bug.title}}
+                                        </h5>
+                                        <v-chip x-small color="orange lighten-1">{{bug.type}}</v-chip>
+                                    </v-col>
+                                    <v-col>
+                                        <v-card-subtitle>
+                                            @{{bug.createdBy}}
+                                        </v-card-subtitle>
+                                    </v-col>
+                                    <v-col>
+
+                                            <v-chip small color="teal lighten-3">{{bug.approveStatus}}</v-chip><br>
+                                            <small>[Note:] {{bug.approveComment}}</small>
+                                    </v-col>
+                                    <v-col>
+                                        <v-card-subtitle>
+                                            <v-chip small color="red lighten-3">{{bug.status}}</v-chip>
+                                        </v-card-subtitle>
+                                    </v-col>
+                                      <v-col>
+                                        <v-card-subtitle>
+                                                <v-btn color="info" @click="getBugId(bug.id),bugStatusDialog=true,successMsg=false,errorMsg=false" depressed small><v-icon small>mdi-pencil-outline</v-icon> Change Status</v-btn>
+                                        </v-card-subtitle>
+                                    </v-col>
+                                  
+                               </v-row>
+                           </v-card>
+                       </v-col>
+                   </v-row>
+
+
+
+            <!-- bug Request list  -->
+                    <v-row v-if="projectManager()">
+                       <v-col>
+                           <v-card class="pa-4 mt-2" elevation="0" style="border: 1px solid #e7e7e7" width="100%">
+                               <v-row class="pa-5">
+                                   <v-icon large>mdi-bug</v-icon> <h3 class="mt-1 ml-2">Bug waiting for Approve</h3>
+                                   <!-- <v-spacer></v-spacer> <v-btn depressed @click="adddialog = true" color="info">Add Drugs</v-btn> -->
+                               </v-row>
+                               <v-row style="background-color:#f2f5f8;border-radius:8px;text-align:center">
+                                   <v-col cols="3">
+                                       <b>Title</b>
+                                   </v-col>
+                                   <v-col>
+                                       <b>Created By</b>
+                                   </v-col>
+                                   <v-col>
+                                       <b>Assigned To</b>
+                                   </v-col>
+                                   <v-col>
+                                       <b>Approve Status</b>
+                                   </v-col>
                                    <v-col>
                                        <b>Approve / Reject</b>
+                                   </v-col>
+                               </v-row>
+                               <v-row v-for="bug in projectMembers.bugs" :key="bug.id" v-show="bug.approveStatus=='No Action'" style="text-align:center;border-bottom: 1px solid #e7e7e7">
+                                    <v-col class="ml-2" style="text-align:left" cols="3">
+                                        <h5 class="mt-2">
+                                            {{bug.title}}
+                                        </h5>
+                                        <v-chip x-small color="orange lighten-1">{{bug.type}}</v-chip>
+                                    </v-col>
+                                    <v-col>
+                                        <v-card-subtitle>
+                                            @{{bug.createdBy}}
+                                        </v-card-subtitle>
+                                    </v-col>
+                                    <v-col>
+                                        <v-card-subtitle>
+                                            @{{bug.assignedTo}}
+                                        </v-card-subtitle>
+                                    </v-col>
+                                    <v-col>
+                                        <v-card-subtitle>
+                                            {{bug.approveStatus}}
+                                        </v-card-subtitle>
+                                    </v-col>
+                                    <v-col>
+                                        <v-card-subtitle>
+                                                <v-btn color="info" @click="getApproveBugId(bug.id),ApproveStatusDialog=true,successMsg=false,errorMsg=false" depressed small><v-icon small>mdi-pencil-outline</v-icon></v-btn><v-btn color="error" @click="getApproveBugId(bug.id),ApproveStatusDialog=true,successMsg=false,errorMsg=false" depressed small><v-icon small>mdi-delete</v-icon></v-btn>
+                                        </v-card-subtitle>
+                                    </v-col>
+                                  
+                               </v-row>
+                           </v-card>
+                       </v-col>
+                   </v-row>
+
+
+
+
+                    <!-- bug list for tester  -->
+                    <v-row v-if="tester()"> 
+                       <v-col>
+                           <v-card class="pa-4 mt-2" elevation="0" style="border: 1px solid #e7e7e7" width="100%">
+                               <v-row class="pa-5">
+                                   <v-icon large>mdi-bug</v-icon> <h3 class="mt-1 ml-2">Bug Created By Me</h3>
+                                   <!-- <v-spacer></v-spacer> <v-btn depressed @click="adddialog = true" color="info">Add Drugs</v-btn> -->
+                               </v-row>
+                               <v-row style="background-color:#f2f5f8;border-radius:8px;text-align:center">
+                                   <v-col cols="3">
+                                       <b>Title</b>
+                                   </v-col>
+                                   <v-col>
+                                       <b>Approve Status</b>
+                                   </v-col>
+                                   <v-col>
+                                       <b>Bug Status</b>
+                                   </v-col>
+                                   <v-col>
+                                       <b>Last Update</b>
+                                   </v-col>
+                                   <v-col>
+                                       <b>Action</b>
+                                   </v-col>
+                               </v-row>
+                               <v-row v-for="bug in projectMembers.bugs" :key="bug.id" style="text-align:center;border-bottom: 1px solid #e7e7e7">
+                                    <v-col class="ml-2" style="text-align:left" cols="3">
+                                        <h5 class="mt-2">
+                                            {{bug.title}}
+                                        </h5>
+                                        <v-chip x-small color="orange lighten-1">{{bug.type}}</v-chip>
+                                    </v-col>
+                                    <v-col>
+                                            <v-chip small color="teal lighten-3">{{bug.approveStatus}}</v-chip><br>
+                                            <small>[Note:] {{bug.approveComment}}</small>
+                                    </v-col>
+                                    <v-col>
+                                        <v-chip small color="teal lighten-3">{{bug.status}}</v-chip><br>
+                                            <small>[Note:] {{bug.comment}}</small>
+                                    </v-col>
+                                    <v-col>
+                                            <v-chip small color="red lighten-3">{{bug.updatedBy}}</v-chip><br>
+                                           <small>( {{bug.updatedOn}} )</small>
+                                    </v-col>
+                                      <v-col>
+                                        <v-card-subtitle>
+                                                <v-btn color="#E4525E white--text" depressed small><v-icon small>mdi-cancel</v-icon> Close</v-btn>
+                                        </v-card-subtitle>
+                                    </v-col>
+                                  
+                               </v-row>
+                           </v-card>
+                       </v-col>
+                   </v-row>
+
+
+
+                <!-- bug list for project Manager  -->
+                    <v-row v-if="projectManager()">
+                       <v-col>
+                           <v-card class="pa-4 mt-2" elevation="0" style="border: 1px solid #e7e7e7" width="100%">
+                               <v-row class="pa-5">
+                                   <v-icon large>mdi-bug</v-icon> <h3 class="mt-1 ml-2">Resent Bugs of ( {{projectMembers.name}} )</h3>
+                                   <!-- <v-spacer></v-spacer> <v-btn depressed @click="adddialog = true" color="info">Add Drugs</v-btn> -->
+                               </v-row>
+                               <v-row style="background-color:#f2f5f8;border-radius:8px;text-align:center">
+                                   <v-col cols="3">
+                                       <b>Title</b>
+                                   </v-col>
+                                   <v-col>
+                                       <b>Created By</b>
+                                   </v-col>
+                                    <v-col>
+                                       <b>Assigned To</b>
+                                   </v-col>
+                                   <v-col>
+                                       <b>Approve Status</b>
+                                   </v-col>
+                                   <v-col>
+                                       <b>Bug Status</b>
+                                   </v-col>
+                                   <v-col>
+                                       <b>Last Update</b>
                                    </v-col>
                                </v-row>
                                <v-row v-for="bug in projectMembers.bugs" :key="bug.id" style="text-align:center;border-bottom: 1px solid #e7e7e7">
@@ -94,31 +272,27 @@
                                     </v-col>
                                     <v-col>
                                         <v-card-subtitle>
+                                            @{{bug.assignedTo}}
+                                        </v-card-subtitle>
+                                    </v-col>
+                                    <v-col>
+                                        <v-card-subtitle>
                                             {{bug.approveStatus}}
                                         </v-card-subtitle>
                                     </v-col>
                                     <v-col>
-                                        <v-card-subtitle>
-                                            <v-chip small color="red lighten-3">{{bug.status}}</v-chip>
-                                        </v-card-subtitle>
+                                        <v-chip small color="teal lighten-3">{{bug.status}}</v-chip><br>
+                                            <small>[Note:] {{bug.comment}}</small>
                                     </v-col>
-                                      <v-col>
-                                        <v-card-subtitle>
-                                                <v-btn color="info" depressed small><v-icon small>mdi-pencil-outline</v-icon> Change Status</v-btn>
-                                        </v-card-subtitle>
-                                    </v-col>
-
                                     <v-col>
-                                        <v-card-subtitle>
-                                                <v-btn color="info" depressed small><v-icon small>mdi-pencil-outline</v-icon></v-btn><v-btn color="error" depressed small><v-icon small>mdi-delete</v-icon></v-btn>
-                                        </v-card-subtitle>
+                                        <v-chip small color="red lighten-3">{{bug.updatedBy}}</v-chip><br>
+                                           <small>( {{bug.updatedOn}} )</small>
                                     </v-col>
                                   
                                </v-row>
                            </v-card>
                        </v-col>
                    </v-row>
-
 
                 </v-card>
 
@@ -207,6 +381,106 @@
             </v-card>
         </v-dialog>
 
+
+
+
+        <!-- Change Bug Status dialog -->
+
+        <v-dialog title="Add New Drug" v-model="bugStatusDialog" max-width="500px">
+            <v-card class="pa-5">
+                 <v-progress-linear
+                    :active="loadingResponse"
+                    :indeterminate="loadingResponse"
+                    absolute
+                    top
+                    color="#AD74B8"
+                ></v-progress-linear>
+                <h3>Change Bug Status</h3>
+                <!-- <v-btn depressed color="info"><v-icon class="mr-2" @click="adddialog = false">mdi-content-save</v-icon> Save Drug</v-btn> -->
+                <br><br>
+                <v-form ref="form" lazy-validation class="pa-2">
+                    <v-row class="pb-0 pt-0">
+                        <v-col class="pb-0 pt-0">
+                            <v-select
+                            v-model="bugStatus.status"
+                            :items="['Acknowledged','Fixed']"
+                            item-text="Name"
+                            item-value="value"
+                            label="Set Status As"
+                            ></v-select>
+                        </v-col>
+                    </v-row>
+
+                    <v-row>
+                    <v-col class="pb-0 pt-0">
+                        <v-textarea
+                        dense
+                        v-model="bugStatus.comment"
+                        :rules="[rules.required, rules.description]"
+                        label="Update Note"
+                        required
+                        ></v-textarea>
+                    </v-col>
+                    </v-row>
+
+                    <v-row>
+                            
+                            <v-col class="pb-0 pt-2">
+                                <v-btn elevation="0" class="float-right" color="purple white--text" @click="changeBug()">Submit</v-btn>
+                            </v-col>
+                    </v-row>
+                </v-form>
+            </v-card>
+        </v-dialog>
+
+
+        <!-- Change Approve Status dialog -->
+
+        <v-dialog title="Add New Drug" v-model="ApproveStatusDialog" max-width="500px">
+            <v-card class="pa-5">
+                 <v-progress-linear
+                    :active="loadingResponse"
+                    :indeterminate="loadingResponse"
+                    absolute
+                    top
+                    color="#AD74B8"
+                ></v-progress-linear>
+                <h3>Approve / Reject Bug</h3>
+                <!-- <v-btn depressed color="info"><v-icon class="mr-2" @click="adddialog = false">mdi-content-save</v-icon> Save Drug</v-btn> -->
+                <br><br>
+                <v-form ref="form" lazy-validation class="pa-2">
+                    <v-row class="pb-0 pt-0">
+                        <v-col class="pb-0 pt-0">
+                            <v-select
+                            v-model="approveBugStatus.status"
+                            :items="['Approved','Rejected']"
+                            label="Set Status As"
+                            ></v-select>
+                        </v-col>
+                    </v-row>
+
+                    <v-row>
+                    <v-col class="pb-0 pt-0">
+                        <v-textarea
+                        dense
+                        v-model="approveBugStatus.comment"
+                        :rules="[rules.required, rules.description]"
+                        label="Update Note"
+                        required
+                        ></v-textarea>
+                    </v-col>
+                    </v-row>
+
+                    <v-row>
+                            
+                            <v-col class="pb-0 pt-2">
+                                <v-btn elevation="0" class="float-right" color="purple white--text" @click="approveBug()">Submit</v-btn>
+                            </v-col>
+                    </v-row>
+                </v-form>
+            </v-card>
+        </v-dialog>
+
     </div>
 </template>
 <script>
@@ -218,6 +492,8 @@ export default {
       input: "",
       dialog: false,
       addBugDialog: false,
+      bugStatusDialog: false,
+      ApproveStatusDialog: false,
       selectedProject: "",
       isLoading: false,
         successMsg: false,
@@ -232,14 +508,14 @@ export default {
         auth: "Bearer " + localStorage.getItem("token"),
       userInfo: {},
       formData: {
-            assignedTo: "sonat1001",
-            createdBy: "tester",
-            createdOn: "string",
-            description: "a big bug found",
-            projectId: "19324c6c-3793-44f8-b38c-f1e7168e842c",
-            teamId: "string",
-            title: "ISSUE: Normal user can controll admin panel",
-            type: "Backend Development"
+            assignedTo: "",
+            createdBy: "",
+            createdOn: "",
+            description: "",
+            projectId: "",
+            teamId: "",
+            title: "",
+            type: ""
             },
     type: [{Name:"Security defects",value:"Security defects"},{Name:"Compatibility defects",value:"Compatibility defects"},{Name:"Usability defects",value:"Usability defects"},{Name:"Performance defects",value:"Performance defects"}, {Name:"Functional defects",value:"Functional defects"}],
     developers: [
@@ -248,6 +524,23 @@ export default {
             username: ""
         }
     ],
+
+    bugStatus: {
+        bugId: "",
+        comment: "",
+        status: "",
+        updateBy: "",
+        updateTime: "",
+        userId: ""
+    },
+    approveBugStatus: {
+        bugId: "",
+        comment: "",
+        status: "",
+        updateBy: "",
+        updateTime: "",
+        userId: ""
+    },
     
      rules: {
                 required: value => !!value || 'Required.',
@@ -293,6 +586,12 @@ export default {
         (Math.floor(Math.random() * 56) + 200) +
         ")"
       );
+    },
+    getApproveBugId(id){
+        this.approveBugStatus.bugId = id;
+    },
+    getBugId(id){
+        this.bugStatus.bugId = id;
     },
     show() {
       return 0;
@@ -378,12 +677,127 @@ export default {
      .catch(err => console.log(err.response));
          
      },
+
+
+     changeBug(){
+        this.successMsg=false;
+        this.errorMsg = false;
+        this.bugStatus.updateBy = this.userInfo.username;
+        this.bugStatus.updateTime = new Date().toLocaleString();
+        let r =  this.$refs.form.validate();
+        if(r == true){
+            this.loadingResponse = true;
+            this.changeBugStatus(JSON.stringify(this.approveBugStatus));
+        }
+    },
+    changeBugStatus(data) {
+        console.log(data);
+        axios({
+            method: "PUT",
+            data: this.bugStatus,
+            url: this.BUG_API+"change-status",
+            headers: {
+            Authorization: this.auth,
+            "Content-Type": "application/json"
+            }
+        })
+        .then(response => {
+        console.log(response)
+        this.addBugDialog = false;
+        if(response.status == 200){
+            if(response.data.message != "Status Changed") {
+                this.apiResponse = response.data.message;
+                this.successMsg=false;
+                this.errorMsg = true;
+                this.loadingResponse = false;
+            }else{
+                this.apiResponse = "Status Changed!";
+                this.errorMsg = false;
+                this.successMsg=true;
+                this.loadingResponse = false;
+                this.getProjectInfo();
+                this.bugStatusDialog = false;
+                
+            }
+            }
+        else{
+        this.apiResponse = response.data.message;
+            this.successMsg=false;
+            this.errorMsg = true;
+            this.loadingResponse = false;
+        }
+        })
+     .catch(err => console.log(err.response));
+         
+     },
+     approveBug(){
+        this.successMsg=false;
+        this.errorMsg = false;
+        this.approveBugStatus.updateBy = this.userInfo.username;
+        this.approveBugStatus.updateTime = new Date().toLocaleString();
+        let r =  this.$refs.form.validate();
+        if(r == true){
+            this.loadingResponse = true;
+            this.changeApproveStatus(JSON.stringify(this.approveBugStatus));
+        }
+    },
+    changeApproveStatus(data) {
+        console.log(data);
+        axios({
+            method: "PUT",
+            data: this.approveBugStatus,
+            url: this.BUG_API+"change-approve-status",
+            headers: {
+            Authorization: this.auth,
+            "Content-Type": "application/json"
+            }
+        })
+        .then(response => {
+        console.log(response)
+        this.addBugDialog = false;
+        if(response.status == 200){
+            if(response.data.message != "Approve Status Changed") {
+                this.apiResponse = response.data.message;
+                this.successMsg=false;
+                this.errorMsg = true;
+                this.loadingResponse = false;
+            }else{
+                this.apiResponse = "Approve Status Changed!";
+                this.errorMsg = false;
+                this.successMsg=true;
+                this.loadingResponse = false;
+                this.getProjectInfo();
+                this.ApproveStatusDialog = false;
+                
+            }
+            }
+        else{
+        this.apiResponse = response.data.message;
+            this.successMsg=false;
+            this.errorMsg = true;
+            this.loadingResponse = false;
+        }
+        })
+     .catch(err => console.log(err.response));
+         
+     },
      projectManager(){
          var string = this.myRole[0].name;   
          if(string=="PROJECT_MANAGER"){
              return true;
          }
-         console.log(string)
+     },
+     developer(){
+         var string = this.myRole[0].name;   
+         if(string=="DEVELOPER"){
+             return true;
+         }
+     },
+     tester(){
+         var string = this.myRole[0].name;   
+         if(string=="TESTER"){
+             return true;
+         }
      },
      getDevelopers(){
        console.log("deveee")

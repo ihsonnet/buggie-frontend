@@ -325,6 +325,7 @@ export default {
                 this.errorMsg = false;
                 this.successMsg=true;
                 this.loadingResponse = false;
+                this.getProjectInfo();
             }
             }
         else{

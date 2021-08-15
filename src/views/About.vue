@@ -17,7 +17,7 @@
       elevation="2"
     >
     <br>
-      <h2 style="color:#B678B8">Buggie | A OpenSource Bug Report Management Tool</h2> <br><br>
+      <h2 style="color:#B678B8">Buggie | An OpenSource Bug Report Management Tool</h2> <br><br>
       <h3>Backend Technology: Java , Spring Boot , Rest Api</h3><br>
       <h3>Database: PostgreSQL</h3> <br>
       <h3>Frontend Technology: Vue.Js , Vuetify.Js</h3><br>
@@ -36,9 +36,9 @@
     data: () => ({
       items: [
         {
-          text: 'a2sDMS',
+          text: 'Buggie',
           disabled: false,
-          href: 'https://a2sdms.com',
+          href: '/',
         },
         {
           text: 'About',

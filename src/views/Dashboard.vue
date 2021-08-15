@@ -19,7 +19,7 @@
         </v-row>
         <v-row v-if="userInfo">
             <v-col lg="3" md="3" sm="12" cols="12">
-                <v-card flat  class="ma-5" elevation="0">
+                <v-card  flat  class="ma-5" elevation="0">
                     <h4>My Projects:</h4>
                     <br>
                     <v-row v-for="item in userInfo.projects" :key="item">
