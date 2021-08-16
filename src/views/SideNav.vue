@@ -10,11 +10,13 @@
             <v-list-item-avatar>
               <v-img src="https://i.ibb.co/vXPhN8g/eff3aeec8f45.jpg"></v-img>
             </v-list-item-avatar>
-            <v-list-item-content>
-              <v-list-item-title class="text-h6">
-               Injamamul Haque Sonet
+            <v-list-item-content v-if="userInfo">
+              <v-list-item-title class="text-h7">
+               {{userInfo.firstName}} {{userInfo.lastName}}
               </v-list-item-title>
-              <v-list-item-subtitle>Project Manager</v-list-item-subtitle>
+              <v-list-item-subtitle v-if="userInfo">
+                <v-chip x-small color="purple">@{{userInfo.username}}</v-chip>
+              </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -52,6 +54,45 @@
         </v-list>
     </v-navigation-drawer>
 </template>
+<script>
+import axios from "axios"
+export default {
+  data(){
+    return {
+      GET_LOGGED_IN_PROFILE_API: "https://buggie-backend.herokuapp.com/auth/user-info",
+      user: {},
+      auth: "Bearer " + localStorage.getItem("token"),
+      userInfo:{},
+    }
+  },
+  methods: {
+    getProfileInfo() {
+      console.log(this.auth)
+      axios({
+        method: "get",
+        url: this.GET_LOGGED_IN_PROFILE_API,
+        headers: {
+          Authorization: this.auth,
+          "Content-Type": "application/json"
+        }
+      })
+      .then(r => {
+      console.log(r.data)
+      this.userInfo = r.data;
+      localStorage.setItem("userInfo", JSON.stringify(r.data));
+      // location.reload();
+              })
+      .catch(r => {
+        console.log(r)
+      });
+    },
+  },
+  mounted(){
+      this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      this.getProfileInfo();
+  }
+}
+</script>
 <style lang="scss" scoped>
 .v-list-item__title {
   font-size: 15px !important;

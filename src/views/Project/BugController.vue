@@ -633,7 +633,7 @@ export default {
         this.errorMsg = false;
         this.formData.createdBy = this.userInfo.username;
         this.formData.projectId = this.projectMembers.id;
-        this.formData.createdOn = Date().toLocaleString();
+        this.formData.createdOn = new Date().toLocaleString();
         let r =  this.$refs.form.validate();
         if(r == true){
             this.loadingResponse = true;
@@ -665,6 +665,7 @@ export default {
                 this.errorMsg = false;
                 this.successMsg=true;
                 this.loadingResponse = false;
+                this.getProjectInfo();
             }
             }
         else{

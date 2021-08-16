@@ -86,57 +86,6 @@
                             </v-card>
                         </v-col>
                    </v-row>
-                   <!-- <v-row>
-                        <v-col>
-                            <v-card class="pa-4 mt-2" elevation="0" style="border: 1px solid #e7e7e7" width="100%">
-                                <v-row class="rowise">
-                                    <v-col>
-                                        <v-text-field
-                                            v-model="input"
-                                            class="mt-2 pa-0"
-                                            outlined
-                                            color="#666666"
-                                            dense
-                                            label="Pulse"
-                                        >
-                                            <template slot="append">
-                                                <v-chip color="info" small>/min</v-chip>
-                                            </template>
-                                        </v-text-field>
-                                    </v-col>
-                                    <v-col>
-                                        <v-text-field
-                                            v-model="input"
-                                            placeholder="120/80"
-                                            class="mt-2 pa-0"
-                                            outlined
-                                            color="#666666"
-                                            dense
-                                            label="BP"
-                                        >
-                                            <template slot="append">
-                                                <v-chip color="green" small>mmHg</v-chip>
-                                            </template>
-                                        </v-text-field>
-                                    </v-col>
-                                     <v-col>
-                                        <v-text-field
-                                            v-model="input"
-                                            class="mt-2 pa-0"
-                                            outlined
-                                            color="#666666"
-                                            dense
-                                            label="Temparature"
-                                        >
-                                            <template slot="append">
-                                                <v-chip color="orange" small>°F</v-chip>
-                                            </template>
-                                        </v-text-field>
-                                    </v-col>
-                                </v-row>
-                            </v-card>
-                        </v-col>
-                   </v-row> -->
                    <v-row>
                        <v-col>
                            <v-card class="pa-4 mt-2" elevation="0" style="border: 1px solid #e7e7e7" width="100%">
@@ -152,13 +101,13 @@
                                        <b>Created By</b>
                                    </v-col>
                                    <v-col>
+                                       <b>assigned To</b>
+                                   </v-col>
+                                   <v-col>
                                        <b>Approve Status</b>
                                    </v-col>
                                    <v-col>
                                        <b>Bug Status</b>
-                                   </v-col>
-                                   <v-col>
-                                       <b>Action</b>
                                    </v-col>
                                </v-row>
                                <v-row v-for="drug in 3" :key="drug" style="text-align:center;border-bottom: 1px solid #e7e7e7">
@@ -170,7 +119,12 @@
                                     </v-col>
                                     <v-col>
                                         <v-card-subtitle>
-                                            ihsonnet
+                                            @ihsonnet
+                                        </v-card-subtitle>
+                                    </v-col>
+                                     <v-col>
+                                        <v-card-subtitle>
+                                            @sonat1001
                                         </v-card-subtitle>
                                     </v-col>
                                     <v-col>
@@ -180,14 +134,7 @@
                                     </v-col>
                                     <v-col>
                                         <v-card-subtitle>
-                                            <v-chip small color="red lighten-3">New</v-chip>
-                                        </v-card-subtitle>
-                                    </v-col>
-                                    <v-col>
-                                        <v-card-subtitle>
-                                            <v-btn-group>
-                                                <v-btn color="info" depressed small><v-icon small>mdi-pencil-outline</v-icon></v-btn><v-btn color="error" depressed small><v-icon small>mdi-delete</v-icon></v-btn>
-                                            </v-btn-group>
+                                            <v-chip small text-color="white" color="#E55461">New</v-chip>
                                         </v-card-subtitle>
                                     </v-col>
                                </v-row>
