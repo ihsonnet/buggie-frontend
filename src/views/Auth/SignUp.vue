@@ -214,7 +214,7 @@ export default {
             this.errorMsg = false;
             this.successMsg=true;
             this.loadingResponse = false;
-            this.$router.push("/cpanel/dashboard");
+            this.$router.push("/");
         }else{
             this.apiResponse = response.data.massage;
             this.successMsg=false;
@@ -238,7 +238,7 @@ export default {
          
     },
     redirect(){
-      this.$router.push("/cpanel/dashboard");
+      this.$router.push("/");
     }
   },
   mounted(){

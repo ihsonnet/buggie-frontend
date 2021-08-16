@@ -219,7 +219,7 @@
                                     </v-col>
                                       <v-col>
                                         <v-card-subtitle>
-                                                <v-btn color="#E4525E white--text" depressed small><v-icon small>mdi-cancel</v-icon> Close</v-btn>
+                                                <v-btn color="info" @click="getBugId(bug.id),bugStatusDialog=true,successMsg=false,errorMsg=false" depressed small><v-icon small>mdi-pencil-outline</v-icon>Change Status</v-btn>
                                         </v-card-subtitle>
                                     </v-col>
                                   
@@ -399,11 +399,23 @@
                 <!-- <v-btn depressed color="info"><v-icon class="mr-2" @click="adddialog = false">mdi-content-save</v-icon> Save Drug</v-btn> -->
                 <br><br>
                 <v-form ref="form" lazy-validation class="pa-2">
-                    <v-row class="pb-0 pt-0">
+                    <v-row v-if="developer()" class="pb-0 pt-0">
                         <v-col class="pb-0 pt-0">
                             <v-select
                             v-model="bugStatus.status"
                             :items="['Acknowledged','Fixed']"
+                            item-text="Name"
+                            item-value="value"
+                            label="Set Status As"
+                            ></v-select>
+                        </v-col>
+                    </v-row>
+
+                    <v-row v-if="tester()" class="pb-0 pt-0">
+                        <v-col class="pb-0 pt-0">
+                            <v-select
+                            v-model="bugStatus.status"
+                            :items="['Closed','ReOpened']"
                             item-text="Name"
                             item-value="value"
                             label="Set Status As"
