@@ -79,7 +79,7 @@
                                </v-row>
                                <v-row v-for="bug in projectMembers.bugs" :key="bug.id" v-show="bug.approveStatus=='Approved'" style="text-align:center;border-bottom: 1px solid #e7e7e7">
                                     <v-col class="ml-2" style="text-align:left" cols="3">
-                                        <h5 class="mt-2">
+                                        <h5 style="cursor:pointer" @click="getBugId(bug),bugDetailsDialog=true" class="mt-2">
                                             {{bug.title}}
                                         </h5>
                                         <v-chip x-small color="orange lighten-1">{{bug.type}}</v-chip>
@@ -101,7 +101,7 @@
                                     </v-col>
                                       <v-col>
                                         <v-card-subtitle>
-                                                <v-btn color="info" @click="getBugId(bug.id),bugStatusDialog=true,successMsg=false,errorMsg=false" depressed small><v-icon small>mdi-pencil-outline</v-icon> Change Status</v-btn>
+                                                <v-btn color="info" @click="getBugId(bug),bugStatusDialog=true,successMsg=false,errorMsg=false" depressed small><v-icon small>mdi-pencil-outline</v-icon> Change Status</v-btn>
                                         </v-card-subtitle>
                                     </v-col>
                                   
@@ -139,7 +139,7 @@
                                </v-row>
                                <v-row v-for="bug in projectMembers.bugs" :key="bug.id" v-show="bug.approveStatus=='No Action'" style="text-align:center;border-bottom: 1px solid #e7e7e7">
                                     <v-col class="ml-2" style="text-align:left" cols="3">
-                                        <h5 class="mt-2">
+                                        <h5 style="cursor:pointer" @click="getBugId(bug),bugDetailsDialog=true" class="mt-2">
                                             {{bug.title}}
                                         </h5>
                                         <v-chip x-small color="orange lighten-1">{{bug.type}}</v-chip>
@@ -200,7 +200,7 @@
                                </v-row>
                                <v-row v-for="bug in projectMembers.bugs" :key="bug.id" style="text-align:center;border-bottom: 1px solid #e7e7e7">
                                     <v-col class="ml-2" style="text-align:left" cols="3">
-                                        <h5 class="mt-2">
+                                        <h5 style="cursor:pointer" @click="getBugId(bug),bugDetailsDialog=true" class="mt-2">
                                             {{bug.title}}
                                         </h5>
                                         <v-chip x-small color="orange lighten-1">{{bug.type}}</v-chip>
@@ -219,7 +219,7 @@
                                     </v-col>
                                       <v-col>
                                         <v-card-subtitle>
-                                                <v-btn color="info" @click="getBugId(bug.id),bugStatusDialog=true,successMsg=false,errorMsg=false" depressed small><v-icon small>mdi-pencil-outline</v-icon>Change Status</v-btn>
+                                                <v-btn color="info" :disabled="!bug.status===`Fixed`" @click="getBugId(bug),bugStatusDialog=true,successMsg=false,errorMsg=false" depressed small><v-icon small>mdi-pencil-outline</v-icon>Change Status</v-btn>
                                         </v-card-subtitle>
                                     </v-col>
                                   
@@ -260,7 +260,7 @@
                                </v-row>
                                <v-row v-for="bug in projectMembers.bugs" :key="bug.id" style="text-align:center;border-bottom: 1px solid #e7e7e7">
                                     <v-col class="ml-2" style="text-align:left" cols="3">
-                                        <h5 class="mt-2">
+                                        <h5 style="cursor:pointer" @click="getBugId(bug),bugDetailsDialog=true" class="mt-2">
                                             {{bug.title}}
                                         </h5>
                                         <v-chip x-small color="orange lighten-1">{{bug.type}}</v-chip>
@@ -343,7 +343,7 @@
                             ></v-select>
                         </v-col>
                         </v-row>
-                        <v-row>
+                        <!-- <v-row>
                         <v-col class="pb-0 pt-0">
                             <v-textarea
                             dense
@@ -353,7 +353,7 @@
                             required
                             ></v-textarea>
                         </v-col>
-                        </v-row>
+                        </v-row> -->
                      </v-col>
                      <v-col>
                       <v-row class="pb-0 pt-0">
@@ -369,6 +369,17 @@
                         </v-col>
                     </v-row>
                      </v-col>
+                   </v-row>
+
+                   <v-row>
+                       <v-col>
+                           <tiptap-vuetify
+                           style="elevation:0"
+                           title="Description"
+                                v-model="formData.description"
+                                :extensions="extensions"
+                                />
+                       </v-col>
                    </v-row>
                     
                     <v-row>
@@ -403,7 +414,7 @@
                         <v-col class="pb-0 pt-0">
                             <v-select
                             v-model="bugStatus.status"
-                            :items="['Acknowledged','Fixed']"
+                            :items="['In Progress','Fixed']"
                             item-text="Name"
                             item-value="value"
                             label="Set Status As"
@@ -446,9 +457,9 @@
         </v-dialog>
 
 
-        <!-- Change Approve Status dialog -->
+        <!-- Bug Details dialog -->
 
-        <v-dialog title="Add New Drug" v-model="ApproveStatusDialog" max-width="500px">
+        <v-dialog title="Add New Drug" v-model="bugDetailsDialog" max-width="990px">
             <v-card class="pa-5">
                  <v-progress-linear
                     :active="loadingResponse"
@@ -457,7 +468,44 @@
                     top
                     color="#AD74B8"
                 ></v-progress-linear>
-                <h3>Approve / Reject Bug</h3>
+                <h3>Bug Details</h3>
+                <!-- <v-btn depressed color="info"><v-icon class="mr-2" @click="adddialog = false">mdi-content-save</v-icon> Save Drug</v-btn> -->
+                <br><br>
+                <v-row>
+                    <v-col>
+                        <v-card>
+                            <b-row>
+                                <v-col cols="2">
+                                    <v-icon color="red">mdi-bug</v-icon>
+                                </v-col>
+                                <v-col cols="6">
+                                    <h3>{{bugDetails.title}}</h3>
+                                </v-col>
+                            </b-row>
+                        </v-card>
+                    </v-col>
+                </v-row>
+                <v-row>
+                    status
+                </v-row>
+                <v-row>
+                    <v-col>
+                        <div style="width:900px !important" v-html="bugDetails.description"></div>
+                    </v-col>
+                </v-row>
+            </v-card>
+        </v-dialog>
+
+         <v-dialog title="Add New Drug" v-model="ApproveStatusDialog" max-width="500px">
+            <v-card class="pa-5">
+                 <v-progress-linear
+                    :active="loadingResponse"
+                    :indeterminate="loadingResponse"
+                    absolute
+                    top
+                    color="#AD74B8"
+                ></v-progress-linear>
+                <h3>Change Approve Status</h3>
                 <!-- <v-btn depressed color="info"><v-icon class="mr-2" @click="adddialog = false">mdi-content-save</v-icon> Save Drug</v-btn> -->
                 <br><br>
                 <v-form ref="form" lazy-validation class="pa-2">
@@ -465,7 +513,7 @@
                         <v-col class="pb-0 pt-0">
                             <v-select
                             v-model="approveBugStatus.status"
-                            :items="['Approved','Rejected']"
+                            :items="['Approved','Rejected','Deffered','Duplicate']"
                             label="Set Status As"
                             ></v-select>
                         </v-col>
@@ -493,12 +541,15 @@
             </v-card>
         </v-dialog>
 
+
     </div>
 </template>
 <script>
 import axios from "axios"
+import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph,Image, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
 export default {
-  data() {
+    components: { TiptapVuetify },
+    data() {
     return {
       idx: 0,
       input: "",
@@ -506,6 +557,7 @@ export default {
       addBugDialog: false,
       bugStatusDialog: false,
       ApproveStatusDialog: false,
+      bugDetailsDialog: false,
       selectedProject: "",
       isLoading: false,
         successMsg: false,
@@ -514,6 +566,7 @@ export default {
       loadingResponse: false,
       apiResponse: "",
       projectMembers: [],
+      bugDetails: {},
       projectInfo: {},
         PROJECT_API:"https://buggie-backend.herokuapp.com/project/",
         BUG_API:"https://buggie-backend.herokuapp.com/bug/",
@@ -523,7 +576,10 @@ export default {
             assignedTo: "",
             createdBy: "",
             createdOn: "",
-            description: "",
+            description: `<h2>Description:</h2>
+        <p>write Something here</p>
+        <h3>Screenshot:</h3>
+        <p></p>`,
             projectId: "",
             teamId: "",
             title: "",
@@ -563,6 +619,29 @@ export default {
                     return pattern.test(value) || 'Invalid e-mail.'
                 },
             },
+    // declare extensions you want to use
+    extensions: [
+        History,
+        Blockquote,
+        Link,
+        Underline,
+        Strike,
+        Italic,
+        Image,
+        ListItem,
+        BulletList,
+        OrderedList,
+        [Heading, {
+            options: {
+            levels: [1, 2, 3]
+            }
+        }],
+        Bold,
+        Code,
+        HorizontalRule,
+        Paragraph,
+        HardBreak
+        ],
       items: [
         {
           text: "Buggie",
@@ -602,8 +681,9 @@ export default {
     getApproveBugId(id){
         this.approveBugStatus.bugId = id;
     },
-    getBugId(id){
-        this.bugStatus.bugId = id;
+    getBugId(bug){
+        this.bugStatus.bugId = bug.id;
+        this.bugDetails = bug;
     },
     show() {
       return 0;
@@ -795,19 +875,19 @@ export default {
          
      },
      projectManager(){
-         var string = this.myRole[0].name;   
+         var string = this.myRole;   
          if(string=="PROJECT_MANAGER"){
              return true;
          }
      },
      developer(){
-         var string = this.myRole[0].name;   
+         var string = this.myRole;   
          if(string=="DEVELOPER"){
              return true;
          }
      },
      tester(){
-         var string = this.myRole[0].name;   
+         var string = this.myRole;   
          if(string=="TESTER"){
              return true;
          }
@@ -818,9 +898,9 @@ export default {
        console.log(user)
        var dev;
        for (let i = 0; i < user.length; i++) {
-         if(user[i].roles[0].name==="DEVELOPER"){
+         if(user[i].assignedRole==="DEVELOPER"){
            console.log(user[i])
-           this.developers.push({name:user[i].firstName+" "+user[i].lastName, username: user[i].username});
+           this.developers.push({name:user[i].userObject.firstName+" "+user[i].userObject.lastName, username: user[i].userObject.username});
          }
        }
      }

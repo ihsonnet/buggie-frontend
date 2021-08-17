@@ -196,9 +196,9 @@ export default {
         var location = this.projectInfo.members;
         var length = location.length;
         for (let i = 0; i < length; i++) {
-            if(location[i].id == id){
-                localStorage.setItem("myRole", JSON.stringify(location[i].roles));
-                return location[i].roles[0].name;
+            if(location[i].userObject.id == id){
+                localStorage.setItem("myRole", JSON.stringify(location[i].assignedRole));
+                return location[i].assignedRole;
             }
             
         }

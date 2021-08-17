@@ -15,12 +15,12 @@
             <!--Main Col 2 -->
             <v-col lg="" md="9" sm="12" cols="12">
 
-                <v-card v-show="isLoading" class="ma-5" style="text-align:center" elevation="0"> 
+                <v-card v-if="isLoading3" class="ma-5" style="text-align:center" elevation="0"> 
                     <v-progress-circular
                     style="margin:auto"
                     :size="70"
                     :width="7"
-                    color="purple lighten-5"
+                    color="#d4d6d8"
                     indeterminate
                     ></v-progress-circular>
                 </v-card>
@@ -28,7 +28,7 @@
 
                 
                 <!-- item for members -->
-                <v-card class="ma-5" elevation="0">
+                <v-card v-else class="ma-5" elevation="0">
 
                       <!-- Assign Member  -->
                    <v-row v-if="projectManager()">
@@ -61,7 +61,7 @@
                            <v-card class="pa-4 mt-2" elevation="0" style="border: 1px solid #e7e7e7" width="100%">
                                <v-row class="pa-5">
                                    <v-icon large>mdi-bug</v-icon> <h3 class="mt-1 ml-2">Members of ( {{projectMembers.name}})</h3>
-                                   <v-spacer></v-spacer> {{projectMembers.members[0].firstName.charAt(0)}}
+                                   <v-spacer></v-spacer> {{projectMembers.members[0].userObject.firstName.charAt(0)}}
                                </v-row>
                                <v-row style="background-color:#f2f5f8;border-radius:8px;text-align:center">
                                    <v-col cols="4">
@@ -89,27 +89,27 @@
                                                class="ma-3 white--text"
                                                 :color="getRandomColor()"
                                                 size="42"
-                                                ><h3>{{member.firstName.charAt(0)}}</h3></v-avatar>
+                                                ><h3>{{member.userObject.firstName.charAt(0)}}</h3></v-avatar>
                                             </v-col>
                                             <v-col>
                                                  <h5 class="mt-2">
-                                                    {{member.firstName}} {{member.lastName}}
+                                                    {{member.userObject.firstName}} {{member.userObject.lastName}}
                                                 </h5>
-                                                <v-chip x-small color="purple lighten-2 white--text">@{{member.username}}</v-chip>    
+                                                <v-chip x-small color="purple lighten-2 white--text">@{{member.userObject.username}}</v-chip>    
                                             </v-col>
                                         </v-row>
                                     </v-col>
                                     <v-col>
-                                        <v-chip class="mt-3" small outlined color="teal">{{member.roles[0].name}}</v-chip>
+                                        <v-chip class="mt-3" small outlined color="teal">{{member.assignedRole}}</v-chip>
                                     </v-col>
                                     <v-col>
                                         <v-card-subtitle>
-                                            {{member.email}}
+                                            {{member.userObject.email}}
                                         </v-card-subtitle>
                                     </v-col>
                                     <v-col>
                                         <v-card-subtitle>
-                                            {{member.phoneNo}}
+                                            {{member.userObject.phoneNo}}
                                         </v-card-subtitle>
                                     </v-col>
                                     <v-col v-if="projectManager()">
@@ -160,7 +160,7 @@
                     <v-row class="pb-0 pt-0">
                         <v-col class="pb-0 pt-0">
                             <v-select
-                            v-model="formData.userRole[0]"
+                            v-model="formData.userRole"
                             :items="role"
                             item-text="Name"
                             item-value="value"
@@ -191,10 +191,10 @@ export default {
       dialog: false,
       assignMemberDialog: false,
       selectedProject: "",
-      isLoading: false,
+      isLoading3: true,
         successMsg: false,
       errorMsg: false,
-      myRole: [],
+      myRole: "",
       loadingResponse: false,
       apiResponse: "",
       projectMembers: [],
@@ -205,9 +205,7 @@ export default {
       formData: {
             projectId: "",
             userEmail: "",
-            userRole: [
-                "string"
-            ]
+            userRole: "string"
             },
     role: [{Name:"Tester",value:"TESTER"},{Name:"Developer",value:"DEVELOPER"}],
     
@@ -249,7 +247,7 @@ export default {
         "rgb(" +
         (Math.floor(Math.random() * 56) + 200) +
         ", " +
-        (Math.floor(Math.random() * 50) + 200) +
+        (Math.floor(Math.random() * 50) + 150) +
         ", " +
         (Math.floor(Math.random() * 56) + 200) +
         ")"
@@ -270,6 +268,7 @@ export default {
         .then(r => {
             console.log(r.data.data)
             this.projectMembers = r.data.data;
+            this.isLoading3=false;
             console.log("members")
             console.log(this.projectMembers)
             // localStorage.setItem("projectInfo", JSON.stringify(r.data.data));
@@ -339,7 +338,7 @@ export default {
          
      },
      projectManager(){
-         var string = this.myRole[0].name;   
+         var string = this.myRole;   
          if(string=="PROJECT_MANAGER"){
              return true;
          }

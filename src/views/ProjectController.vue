@@ -97,6 +97,7 @@ export default {
             loadingResponse: false,
             apiResponse: null,
             PROJECT_URL: "https://buggie-backend.herokuapp.com/project/",
+            GET_LOGGED_IN_PROFILE_API: "https://buggie-backend.herokuapp.com/auth/user-info",
             auth: "Bearer " + localStorage.getItem("token"),
             successMsg: false,
             errorMsg: false,
@@ -184,12 +185,14 @@ export default {
                 this.errorMsg = false;
                 this.successMsg = true;
                 this.loadingResponse = false;
+                this.getProfileInfo();
             }
             else{
             this.apiResponse = response.data.messege;
                 this.successMsg=false;
                 this.errorMsg = true;
                 this.loadingResponse = false;
+                
             }
             // this.user.authenticated = true
             // console.log(localStorage)
@@ -204,7 +207,29 @@ export default {
                 (Math.floor(Math.random()*56)+200) +
                 ')';
             },
-        }
+
+         getProfileInfo() {
+        // console.log(this.auth)
+        axios({
+            method: "get",
+            url: this.GET_LOGGED_IN_PROFILE_API,
+            headers: {
+            Authorization: this.auth,
+            "Content-Type": "application/json"
+            }
+        })
+        .then(r => {
+        console.log(r.data)
+        this.userInfo = r.data;
+        localStorage.setItem("userInfo", JSON.stringify(r.data));
+        // location.reload();
+                })
+        .catch(r => {
+            console.log(r)
+        });
+        },
+        },
+       
 }
 </script>
 

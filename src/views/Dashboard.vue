@@ -56,7 +56,7 @@
                                    </v-col>
                                    <v-col cols="4">
                                        <h3 class="ma-4"><b>{{ userInfo.firstName }} {{ userInfo.lastName }}</b></h3>
-                                        <v-chip v-for="role in userInfo.userRole" :key="role" class="mx-4">{{role}}</v-chip>
+                                        <v-chip v-for="role in userInfo.userRole" :key="role" class="mx-4"><v-icon color="purple" class="mr-2" style="font-size:20px">mdi-numeric-1-circle-outline</v-icon>Level 1</v-chip>
                                    </v-col>
                                    <v-col>
                                        <v-row>
