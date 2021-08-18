@@ -468,25 +468,55 @@
                     top
                     color="#AD74B8"
                 ></v-progress-linear>
-                <h3>Bug Details</h3>
-                <!-- <v-btn depressed color="info"><v-icon class="mr-2" @click="adddialog = false">mdi-content-save</v-icon> Save Drug</v-btn> -->
-                <br><br>
                 <v-row>
                     <v-col>
-                        <v-card>
-                            <b-row>
-                                <v-col cols="2">
-                                    <v-icon color="red">mdi-bug</v-icon>
-                                </v-col>
-                                <v-col cols="6">
-                                    <h3>{{bugDetails.title}}</h3>
-                                </v-col>
-                            </b-row>
+                        <br>
+                        <v-card class="pa-4">
+                           <v-row style="text-align:center;">
+                                    <v-col cols="1">
+                                        <v-card-subtitle>
+                                          <v-icon color="purple lighten-3">mdi-bug</v-icon>
+                                        </v-card-subtitle>
+                                    </v-col>
+                                    <v-col class="ml-2" style="text-align:left" cols="4">
+                                        <h5 class="mt-2">
+                                            {{bugDetails.title}}
+                                        </h5>
+                                        <v-chip x-small color="orange lighten-1">{{bugDetails.type}}</v-chip>
+                                    </v-col>
+                                    <v-col>
+                                        <v-card-subtitle>
+                                           CREATED BY @{{bugDetails.createdBy}}
+                                        </v-card-subtitle>
+                                    </v-col>
+                                    <v-col>
+                                        <v-card-subtitle>
+                                           Assigned To @{{bugDetails.assignedTo}}
+                                        </v-card-subtitle>
+                                    </v-col>
+                                  
+                               </v-row>
                         </v-card>
                     </v-col>
                 </v-row>
-                <v-row>
-                    status
+                <v-row class="pa-4">
+                    <v-col>
+                        Last Update By <br>
+                        <v-chip small class="ml-2" color="purple lighten-2">@{{bugDetails.updatedBy}}</v-chip> <br>
+                        ( {{bugDetails.updatedOn}} )
+                    </v-col>
+                    <v-divider vertical></v-divider>
+                    <v-col>
+                        Approve Status: 
+                        <v-chip small class="ml-2" color="teal lighten-2">@{{bugDetails.approveStatus}}</v-chip> <br>
+                        [Note:] <small>{{bugDetails.approveComment}}</small>
+                    </v-col>
+                    <v-divider vertical></v-divider>
+                    <v-col>
+                        Bug Status: 
+                        <v-chip small class="ml-2" color="teal lighten-2">@{{bugDetails.status}}</v-chip> <br>
+                        [Note:] <small>{{bugDetails.comment}}</small>
+                    </v-col>
                 </v-row>
                 <v-row>
                     <v-col>
@@ -808,9 +838,8 @@ export default {
                 this.errorMsg = false;
                 this.successMsg=true;
                 this.loadingResponse = false;
-                this.getProjectInfo();
                 this.bugStatusDialog = false;
-                
+                this.getProjectInfo();
             }
             }
         else{
@@ -859,8 +888,9 @@ export default {
                 this.errorMsg = false;
                 this.successMsg=true;
                 this.loadingResponse = false;
-                this.getProjectInfo();
                 this.ApproveStatusDialog = false;
+                this.getProjectInfo();
+
                 
             }
             }
@@ -908,7 +938,7 @@ export default {
   mounted() {
     this.selectedProject = this.$route.params.projectId;
     this.getProjectInfo();
-    this.projectMembers = JSON.parse(localStorage.getItem("projectInfo"));
+    // this.projectMembers = JSON.parse(localStorage.getItem("projectInfo"));
     this.myRole = JSON.parse(localStorage.getItem("myRole"));
     this.userInfo = JSON.parse(localStorage.getItem("userInfo"));
   },

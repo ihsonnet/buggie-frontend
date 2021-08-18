@@ -348,7 +348,7 @@ export default {
   mounted() {
     this.selectedProject = this.$route.params.projectId;
     this.getProjectInfo();
-    this.projectMembers = JSON.parse(localStorage.getItem("projectInfo"));
+    // this.projectMembers = JSON.parse(localStorage.getItem("projectInfo"));
     this.myRole = JSON.parse(localStorage.getItem("myRole"));
     console.log(this.myRole)
   },
