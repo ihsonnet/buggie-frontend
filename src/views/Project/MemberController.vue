@@ -247,7 +247,7 @@ export default {
         "rgb(" +
         (Math.floor(Math.random() * 56) + 200) +
         ", " +
-        (Math.floor(Math.random() * 50) + 150) +
+        (Math.floor(Math.random() * 50) + 200) +
         ", " +
         (Math.floor(Math.random() * 56) + 200) +
         ")"
