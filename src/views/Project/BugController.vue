@@ -305,7 +305,7 @@
 
         <!-- add bug dialog -->
 
-        <v-dialog title="Add New Drug" v-model="addBugDialog" max-width="800px">
+        <v-dialog title="Add New Drug" v-model="addBugDialog" max-width="980px">
             <v-card class="pa-5">
                  <v-progress-linear
                     :active="loadingResponse"
@@ -374,6 +374,7 @@
                    <v-row>
                        <v-col>
                            <tiptap-vuetify
+                           class="formhtmlimg"
                            style="elevation:0"
                            title="Description"
                                 v-model="formData.description"
@@ -977,6 +978,14 @@ export default {
 .rowise .col-6 {
   padding-bottom: 0px !important;
   padding-top: 0px !important;
+}
+.formhtmlimg::v-deep {
+    img {
+    max-width: 600px !important;
+    margin: 20px !important;
+    border: 2px solid gray;
+    align-self: center !important;
+}
 }
 .htmlimg::v-deep {
     img {
