@@ -461,13 +461,6 @@
 
         <v-dialog title="Add New Drug"  v-model="bugDetailsDialog" max-height="500px" max-width="1200px">
             <v-card class="pa-5">
-                 <v-progress-linear
-                    :active="loadingResponse"
-                    :indeterminate="loadingResponse"
-                    absolute
-                    top
-                    color="#AD74B8"
-                ></v-progress-linear>
                 <v-container>   
                 <v-row>
                     <v-col>
@@ -521,7 +514,20 @@
                 </v-row>
                 <v-row>
                     <v-col>
-                        <div style="width:900px !important" class="htmlimg" v-html="bugDetails.description"></div>
+                        <v-card v-show="isLoadingBugDetails" class="ma-5" style="text-align:center" elevation="0"> 
+                            <v-progress-circular
+                            style="margin:auto"
+                            :size="70"
+                            :width="7"
+                            color="purple lighten-5"
+                            indeterminate
+                            ></v-progress-circular>
+                         </v-card>
+                    </v-col>
+                </v-row>
+                <v-row v-show="!isLoadingBugDetails">
+                    <v-col>
+                        <div style="width:900px !important" class="htmlimg" v-html="bugInfo.description"></div>
                     </v-col>
                 </v-row>
             </v-container>
@@ -592,6 +598,7 @@ export default {
       bugDetailsDialog: false,
       selectedProject: "",
       isLoading: false,
+      isLoadingBugDetails: true,
         successMsg: false,
       errorMsg: false,
       myRole: [],
@@ -599,6 +606,7 @@ export default {
       apiResponse: "",
       projectMembers: [],
       bugDetails: {},
+      bugInfo: {},
       projectInfo: {},
         PROJECT_API:"https://buggie-backend.herokuapp.com/project/",
         BUG_API:"https://buggie-backend.herokuapp.com/bug/",
@@ -716,6 +724,7 @@ export default {
     getBugId(bug){
         this.bugStatus.bugId = bug.id;
         this.bugDetails = bug;
+        this.getBugInfo()
     },
     show() {
       return 0;
@@ -736,6 +745,24 @@ export default {
             console.log(this.projectMembers)
             // localStorage.setItem("projectInfo", JSON.stringify(r.data.data));
             // this.items[2].text = this.projectInfo.name;
+                })
+        .catch(r => {
+            console.log(r)
+        });
+    },
+        getBugInfo(){
+            this.isLoadingBugDetails = true;
+        axios({
+            method: "get",
+            url: this.BUG_API+"{id}?id="+this.bugStatus.bugId,
+            headers: {
+            Authorization: this.auth,
+            "Content-Type": "application/json"
+            }
+        })
+        .then(r => {
+            this.isLoadingBugDetails = false;
+            this.bugInfo = r.data.data;
                 })
         .catch(r => {
             console.log(r)
