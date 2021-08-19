@@ -459,7 +459,7 @@
 
         <!-- Bug Details dialog -->
 
-        <v-dialog title="Add New Drug" v-model="bugDetailsDialog" max-width="990px">
+        <v-dialog title="Add New Drug"  v-model="bugDetailsDialog" max-height="500px" max-width="1200px">
             <v-card class="pa-5">
                  <v-progress-linear
                     :active="loadingResponse"
@@ -468,6 +468,7 @@
                     top
                     color="#AD74B8"
                 ></v-progress-linear>
+                <v-container>   
                 <v-row>
                     <v-col>
                         <br>
@@ -486,12 +487,12 @@
                                     </v-col>
                                     <v-col>
                                         <v-card-subtitle>
-                                           CREATED BY @{{bugDetails.createdBy}}
+                                           CREATED BY <v-chip class="ml-2" text-color="white" small color="purple lighten-2">@{{bugDetails.createdBy}}</v-chip>
                                         </v-card-subtitle>
                                     </v-col>
                                     <v-col>
                                         <v-card-subtitle>
-                                           Assigned To @{{bugDetails.assignedTo}}
+                                           Assigned To <v-chip class="ml-2" text-color="white" small color="purple lighten-2">@{{bugDetails.assignedTo}}</v-chip>
                                         </v-card-subtitle>
                                     </v-col>
                                   
@@ -499,30 +500,31 @@
                         </v-card>
                     </v-col>
                 </v-row>
-                <v-row class="pa-4">
+                <v-row class="pa-4" style="text-align:center">
                     <v-col>
-                        Last Update By <br>
+                        Last Update By 
                         <v-chip small class="ml-2" color="purple lighten-2">@{{bugDetails.updatedBy}}</v-chip> <br>
                         ( {{bugDetails.updatedOn}} )
                     </v-col>
                     <v-divider vertical></v-divider>
                     <v-col>
                         Approve Status: 
-                        <v-chip small class="ml-2" color="teal lighten-2">@{{bugDetails.approveStatus}}</v-chip> <br>
+                        <v-chip small class="ml-2" color="teal lighten-2">{{bugDetails.approveStatus}}</v-chip> <br>
                         [Note:] <small>{{bugDetails.approveComment}}</small>
                     </v-col>
                     <v-divider vertical></v-divider>
                     <v-col>
                         Bug Status: 
-                        <v-chip small class="ml-2" color="teal lighten-2">@{{bugDetails.status}}</v-chip> <br>
+                        <v-chip small class="ml-2" color="teal lighten-2">{{bugDetails.status}}</v-chip> <br>
                         [Note:] <small>{{bugDetails.comment}}</small>
                     </v-col>
                 </v-row>
                 <v-row>
                     <v-col>
-                        <div style="width:900px !important" v-html="bugDetails.description"></div>
+                        <div style="width:900px !important" class="htmlimg" v-html="bugDetails.description"></div>
                     </v-col>
                 </v-row>
+            </v-container>
             </v-card>
         </v-dialog>
 
@@ -948,5 +950,13 @@ export default {
 .rowise .col-6 {
   padding-bottom: 0px !important;
   padding-top: 0px !important;
+}
+.htmlimg::v-deep {
+    img {
+    max-width: 800px !important;
+    margin: 20px !important;
+    border: 2px solid gray;
+    align-self: center !important;
+}
 }
 </style>
