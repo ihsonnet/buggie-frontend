@@ -169,7 +169,10 @@ export default {
             rules: {
                 required: value => !!value || 'Required.',
                 counter: value => value.length <= 20 || 'Max 20 characters',
-                phone: value => value.length == 11 || 'Length must be 11',
+                phone: value => {
+                    const pattern = /^(?:\+88|01)?(?:\d{11}|\d{13})$/
+                    return pattern.test(value) || 'Use +880 or 01x pattern && Length must be 11'
+                    },
                 email: value => {
                     const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                     return pattern.test(value) || 'Invalid e-mail.'
