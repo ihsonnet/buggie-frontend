@@ -22,6 +22,19 @@
                 <v-card  flat  class="ma-5" elevation="0">
                     <h4>My Projects:</h4>
                     <br>
+                    <v-row v-if="userInfo.projects.length==0" justify="center" style="text-align:center">
+                        <v-col>
+                            <h5 class="my-5" style="margin:auto">No Project Found!</h5>
+                            <v-btn
+                                    color="blue lighten-2 white--text"
+                                    elevation="0"
+                                    link to="projects"
+                                >
+                                    <v-icon>mdi-plus</v-icon>
+                                    <span class="mr-2">Create Project</span>
+                                </v-btn>
+                        </v-col>
+                    </v-row>
                     <v-row v-for="item in userInfo.projects" :key="item">
                         <v-col>
                            <v-card elevation="0" class="my-2" :color="getRandomColor()" link :to="'project/'+item.id">
