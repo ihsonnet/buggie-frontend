@@ -10,7 +10,7 @@
               {{apiResponse}}
             </v-alert>
           </div>
-            <v-row style="margin-top:8%;vertical-align: middle; !important" align="center" justify="center">
+            <v-row style="padding-top:8%;vertical-align: middle; !important" align="center" justify="center">
             <v-col class="d-flex justify-center align-center">
 
             <v-card flat style="padding:2.5%;border:1px solid #d6d9db;margin: auto; !important" color="white" width="400" max-height="1000">
@@ -26,12 +26,12 @@
                     <br>
                     <h3 class="my-4">Sign in to Buggie</h3>
                 </div>
-                <v-form style="margin-top:20px" ref="form" lazy-validation class="">
+              <v-form style="margin-top:20px" ref="form" lazy-validation class="">
                     <v-text-field dense
                         v-model="email"
                         label="E-mail"
                         type="email"
-                        :rules="[rules.required]"
+                        :rules="[rules.required,rules.email]"
                         required
                         outlined
                     ></v-text-field>
@@ -105,6 +105,10 @@ export default {
           required: value => !!value || 'Required.',
           min: v => v.length >= 8 || 'Min 8 characters',
           emailMatch: () => ('The email and password you entered don\'t match'),
+          email: value => {
+                    const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                    return pattern.test(value) || 'Invalid e-mail.'
+                },
         }
     }
   },
@@ -184,7 +188,13 @@ export default {
 
 <style scoped>
 .full-height {
-  height: 720px;
   background-color:#f2f5f8;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+.theme--light.v-messages {
+  color: #E4515D;
 }
 </style>

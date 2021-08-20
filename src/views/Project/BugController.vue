@@ -91,12 +91,12 @@
                                     </v-col>
                                     <v-col>
 
-                                            <v-chip small color="teal lighten-3">{{bug.approveStatus}}</v-chip><br>
+                                            <v-chip small :color="getColor(bug.approveStatus)"><b>{{bug.approveStatus}}</b></v-chip><br>
                                             <small>[Note:] {{bug.approveComment}}</small>
                                     </v-col>
                                     <v-col>
                                         <v-card-subtitle>
-                                            <v-chip small color="red lighten-3">{{bug.status}}</v-chip>
+                                            <v-chip small :color="getColor(bug.status)">{{bug.status}}</v-chip>
                                         </v-card-subtitle>
                                     </v-col>
                                       <v-col>
@@ -156,7 +156,7 @@
                                     </v-col>
                                     <v-col>
                                         <v-card-subtitle>
-                                            {{bug.approveStatus}}
+                                            <v-chip small outlined :color="getColor(bug.approveStatus)"><b>{{bug.approveStatus}}</b></v-chip>
                                         </v-card-subtitle>
                                     </v-col>
                                     <v-col>
@@ -206,15 +206,15 @@
                                         <v-chip x-small color="orange lighten-1">{{bug.type}}</v-chip>
                                     </v-col>
                                     <v-col>
-                                            <v-chip small color="teal lighten-3">{{bug.approveStatus}}</v-chip><br>
+                                            <v-chip small :color="getColor(bug.approveStatus)"><b>{{bug.approveStatus}}</b></v-chip><br>
                                             <small>[Note:] {{bug.approveComment}}</small>
                                     </v-col>
                                     <v-col>
-                                        <v-chip small color="teal lighten-3">{{bug.status}}</v-chip><br>
+                                        <v-chip small :color="getColor(bug.status)">{{bug.status}}</v-chip><br>
                                             <small>[Note:] {{bug.comment}}</small>
                                     </v-col>
                                     <v-col>
-                                            <v-chip small color="red lighten-3">{{bug.updatedBy}}</v-chip><br>
+                                            <v-chip small color="purple lighten-3">{{bug.updatedBy}}</v-chip><br>
                                            <small>( {{bug.updatedOn}} )</small>
                                     </v-col>
                                       <v-col>
@@ -277,15 +277,15 @@
                                     </v-col>
                                     <v-col>
                                         <v-card-subtitle>
-                                            {{bug.approveStatus}}
+                                           <v-chip small :color="getColor(bug.approveStatus)" outlined><b>{{bug.approveStatus}}</b></v-chip>
                                         </v-card-subtitle>
                                     </v-col>
                                     <v-col>
-                                        <v-chip small color="teal lighten-3">{{bug.status}}</v-chip><br>
+                                        <v-chip small :color="getColor(bug.status)">{{bug.status}}</v-chip><br>
                                             <small>[Note:] {{bug.comment}}</small>
                                     </v-col>
                                     <v-col>
-                                        <v-chip small color="red lighten-3">{{bug.updatedBy}}</v-chip><br>
+                                        <v-chip small color="red lighten-3">@{{bug.updatedBy}}</v-chip><br>
                                            <small>( {{bug.updatedOn}} )</small>
                                     </v-col>
                                   
@@ -497,19 +497,19 @@
                 <v-row class="pa-4" style="text-align:center">
                     <v-col>
                         Last Update By 
-                        <v-chip small class="ml-2" color="purple lighten-2">@{{bugDetails.updatedBy}}</v-chip> <br>
+                        <v-chip small class="ml-2" color="red lighten-3">@{{bugDetails.updatedBy}}</v-chip> <br>
                         ( {{bugDetails.updatedOn}} )
                     </v-col>
                     <v-divider vertical></v-divider>
                     <v-col>
                         Approve Status: 
-                        <v-chip small class="ml-2" color="teal lighten-2">{{bugDetails.approveStatus}}</v-chip> <br>
+                        <v-chip small class="ml-2" outlined :color="getColor(bugDetails.approveStatus)"><b>{{bugDetails.approveStatus}}</b></v-chip> <br>
                         [Note:] <small>{{bugDetails.approveComment}}</small>
                     </v-col>
                     <v-divider vertical></v-divider>
                     <v-col>
                         Bug Status: 
-                        <v-chip small class="ml-2" color="teal lighten-2">{{bugDetails.status}}</v-chip> <br>
+                        <v-chip small class="ml-2" :color="getColor(bugDetails.status)">{{bugDetails.status}}</v-chip> <br>
                         [Note:] <small>{{bugDetails.comment}}</small>
                     </v-col>
                 </v-row>
@@ -963,6 +963,18 @@ export default {
            this.developers.push({name:user[i].userObject.firstName+" "+user[i].userObject.lastName, username: user[i].userObject.username});
          }
        }
+     },
+     getColor(text){
+         if(text==="Approved" || text==="Fixed"){
+             return "#66bb6a"
+         }
+         else if(text==="In Progress" || text==="Deffered"){
+             return "#ffa000"
+         }
+         else if(text==="No Action" || text==="Closed"){
+             return "#808e95"
+         }
+         else return "#e57373"
      }
   },
   mounted() {
