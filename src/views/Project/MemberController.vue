@@ -266,11 +266,11 @@ export default {
             }
         })
         .then(r => {
-            console.log(r.data.data)
+            // console.log(r.data.data)
             this.projectMembers = r.data.data;
             this.isLoading3=false;
-            console.log("members")
-            console.log(this.projectMembers)
+            // console.log("members")
+            // console.log(this.projectMembers)
             // localStorage.setItem("projectInfo", JSON.stringify(r.data.data));
             // this.items[2].text = this.projectInfo.name;
                 })
@@ -283,7 +283,7 @@ export default {
         var length = location.length;
         for (let i = 0; i < length; i++) {
             if(location[i].id == id){
-                console.log(location[i].roles[0].name)
+                // console.log(location[i].roles[0].name)
                 return location[i].roles[0].name;
             }
             
@@ -300,7 +300,7 @@ export default {
         }
     },
     postAssignMamber(data) {
-        console.log(data);
+        // console.log(data);
         axios({
             method: "POST",
             data: this.formData,
@@ -311,7 +311,7 @@ export default {
             }
         })
         .then(response => {
-        console.log(response)
+        // console.log(response)
         this.assignMemberDialog = false;
         if(response.status == 200){
             if(response.data.message != "Assigned Successfully!") {
@@ -342,7 +342,7 @@ export default {
          if(string=="PROJECT_MANAGER"){
              return true;
          }
-         console.log(string)
+        //  console.log(string)
      }
   },
   mounted() {
@@ -350,7 +350,7 @@ export default {
     this.getProjectInfo();
     // this.projectMembers = JSON.parse(localStorage.getItem("projectInfo"));
     this.myRole = JSON.parse(localStorage.getItem("myRole"));
-    console.log(this.myRole)
+    // console.log(this.myRole)
   },
 };
 </script>

@@ -181,7 +181,7 @@ export default {
             }
         })
         .then(r => {
-            console.log(r.data)
+            // console.log(r.data)
             this.projectInfo = r.data.data;
             this.isLoading2 = false;
             localStorage.setItem("projectInfo", JSON.stringify(r.data));

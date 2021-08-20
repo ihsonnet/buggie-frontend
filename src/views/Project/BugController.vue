@@ -740,15 +740,15 @@ export default {
             }
         })
         .then(r => {
-            console.log(r.data.data)
+            // console.log(r.data.data)
             this.projectMembers = r.data.data;
-            console.log("members")
-            console.log(this.projectMembers)
+            // console.log("members")
+            // console.log(this.projectMembers)
             // localStorage.setItem("projectInfo", JSON.stringify(r.data.data));
             // this.items[2].text = this.projectInfo.name;
                 })
         .catch(r => {
-            console.log(r)
+            // console.log(r)
         });
     },
         getBugInfo(){
@@ -766,7 +766,7 @@ export default {
             this.bugInfo = r.data.data;
                 })
         .catch(r => {
-            console.log(r)
+            // console.log(r)
         });
     },
     getRoleInProject(id){
@@ -774,7 +774,7 @@ export default {
         var length = location.length;
         for (let i = 0; i < length; i++) {
             if(location[i].id == id){
-                console.log(location[i].roles[0].name)
+                // console.log(location[i].roles[0].name)
                 return location[i].roles[0].name;
             }
             
@@ -793,7 +793,7 @@ export default {
         }
     },
     postAddNewBug(data) {
-        console.log(data);
+        // console.log(data);
         axios({
             method: "POST",
             data: this.formData,
@@ -804,7 +804,7 @@ export default {
             }
         })
         .then(response => {
-        console.log(response)
+        // console.log(response)
         this.addBugDialog = false;
         if(response.status == 201){
             if(response.data.message != "Bug Created") {
@@ -844,7 +844,7 @@ export default {
         }
     },
     changeBugStatus(data) {
-        console.log(data);
+        // console.log(data);
         axios({
             method: "PUT",
             data: this.bugStatus,
@@ -855,7 +855,7 @@ export default {
             }
         })
         .then(response => {
-        console.log(response)
+        // console.log(response)
         this.addBugDialog = false;
         if(response.status == 200){
             if(response.data.message != "Status Changed") {
@@ -894,7 +894,7 @@ export default {
         }
     },
     changeApproveStatus(data) {
-        console.log(data);
+        // console.log(data);
         axios({
             method: "PUT",
             data: this.approveBugStatus,
@@ -905,7 +905,7 @@ export default {
             }
         })
         .then(response => {
-        console.log(response)
+        // console.log(response)
         this.addBugDialog = false;
         if(response.status == 200){
             if(response.data.message != "Approve Status Changed") {
@@ -953,13 +953,13 @@ export default {
          }
      },
      getDevelopers(){
-       console.log("deveee")
+    //    console.log("deveee")
        const user = this.projectMembers.members;
-       console.log(user)
+    //    console.log(user)
        var dev;
        for (let i = 0; i < user.length; i++) {
          if(user[i].assignedRole==="DEVELOPER"){
-           console.log(user[i])
+        //    console.log(user[i])
            this.developers.push({name:user[i].userObject.firstName+" "+user[i].userObject.lastName, username: user[i].userObject.username});
          }
        }
