@@ -114,9 +114,7 @@
                                     </v-col>
                                     <v-col v-if="projectManager()">
                                         <v-card-subtitle>
-                                            <v-btn-group>
                                                 <v-btn color="info" depressed small><v-icon small>mdi-pencil-outline</v-icon></v-btn><v-btn color="error" depressed small><v-icon small>mdi-delete</v-icon></v-btn>
-                                            </v-btn-group>
                                         </v-card-subtitle>
                                     </v-col>
                                </v-row>

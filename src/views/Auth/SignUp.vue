@@ -170,7 +170,7 @@ export default {
                 required: value => !!value || 'Required.',
                 counter: value => value.length <= 20 || 'Max 20 characters',
                 phone: value => {
-                    const pattern = /^(?:\+88|01)?(?:\\d{11}|\\d{13})$/
+                    const pattern = /^(?:\+88|01)?(?:\d{11}|\d{13})$/
                     return pattern.test(value) || 'Use +880 or 01x pattern && Length must be 11'
                     },
                 email: value => {
@@ -277,8 +277,5 @@ export default {
 .col, .col-sm-6, .col-12 {
     padding-top: 0px !important;
     padding-bottom: 0px !important;
-}
-.theme--light.v-messages {
-  color:#E4515D;
 }
 </style>
